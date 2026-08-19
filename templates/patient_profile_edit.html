@@ -1,0 +1,339 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Profile | City Care Hospital</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/patient_dashboard.css' %}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+        }
+
+        .profile-page {
+            margin-left: 280px;
+            padding: 40px;
+        }
+
+        .profile-container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .profile-header {
+            margin-bottom: 25px;
+        }
+
+        .profile-header h1 {
+            color: #17324d;
+            margin-bottom: 8px;
+        }
+
+        .profile-header p {
+            color: #718096;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 35px rgba(15, 61, 99, 0.08);
+        }
+
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 25px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #edf1f5;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(
+                135deg,
+                #1677d2,
+                #4f8cff
+            );
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .profile-top h2 {
+            margin: 0 0 5px;
+            color: #17324d;
+        }
+
+        .profile-top span {
+            color: #718096;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px 14px;
+            border: 1px solid #dce4ed;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            background: #fff;
+        }
+
+        .form-control:focus {
+            border-color: #1677d2;
+            box-shadow: 0 0 0 3px rgba(22,119,210,.10);
+        }
+
+        .error {
+            color: #dc3545;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #edf1f5;
+        }
+
+        .btn {
+            padding: 12px 22px;
+            border-radius: 10px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .btn-back {
+            background: #eef3f8;
+            color: #34495e;
+        }
+
+        .btn-save {
+            background: linear-gradient(
+                135deg,
+                #1677d2,
+                #4f8cff
+            );
+            color: white;
+        }
+
+        .btn-save:hover {
+            opacity: .9;
+        }
+
+        .message {
+            padding: 13px 16px;
+            border-radius: 10px;
+            background: #e8f8ef;
+            color: #198754;
+            margin-bottom: 20px;
+        }
+
+        @media(max-width: 800px) {
+
+            .profile-page {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .buttons {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .btn {
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="profile-page">
+
+    <div class="profile-container">
+
+        <div class="profile-header">
+
+            <h1>
+                <i class="fa-solid fa-user-pen"></i>
+                My Profile
+            </h1>
+
+            <p>
+                Update your personal and contact information
+            </p>
+
+        </div>
+
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="message">
+                    <i class="fa-solid fa-circle-check"></i>
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+        <div class="profile-card">
+
+            <div class="profile-top">
+
+                <div class="profile-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div>
+
+                    <h2>
+                        {{ patient.name }}
+                    </h2>
+
+                    <span>
+                        Patient • City Care Hospital
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="form-grid">
+
+                    {% for field in form %}
+
+                        <div class="form-group
+                            {% if field.name == 'address' %}
+                                full
+                            {% endif %}
+                        ">
+
+                            <label>
+                                {{ field.label }}
+                            </label>
+
+                            {{ field }}
+
+                            {% for error in field.errors %}
+
+                                <div class="error">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="buttons">
+
+                    <a
+                        href="{% url 'patient_dashboard' %}"
+                        class="btn btn-back"
+                    >
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-save"
+                    >
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

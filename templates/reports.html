@@ -1,0 +1,722 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+
+<style>
+    /* Screen पर print report छिपी रहेगी */
+    .print-report {
+        display: none;
+    }
+
+    .report-small-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px;
+        background: #eff6ff;
+        border-radius: 14px;
+        border-left: 5px solid #2563eb;
+    }
+
+    .report-small-card span {
+        color: #64748b;
+        font-weight: 600;
+    }
+
+    .report-small-card strong {
+        font-size: 25px;
+    }
+
+    .report-pending {
+        background: #fffbeb;
+        border-left-color: #f59e0b;
+    }
+
+    .report-completed {
+        background: #ecfdf5;
+        border-left-color: #16a34a;
+    }
+
+    .report-cancelled {
+        background: #fef2f2;
+        border-left-color: #dc3545;
+    }
+
+    @media print {
+        @page {
+            size: A4 landscape;
+            margin: 10mm;
+        }
+
+        .sidebar,
+        .topbar,
+        .screen-report,
+        .no-print {
+            display: none !important;
+        }
+
+        .main-wrapper,
+        .page-content {
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        body {
+            margin: 0 !important;
+            background: white !important;
+        }
+
+        .print-report {
+            display: block !important;
+            width: 100% !important;
+            color: #111;
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+        }
+
+        .print-report-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #2563eb;
+        }
+
+        .print-report-header img {
+            width: 58px !important;
+            height: 58px !important;
+            object-fit: contain !important;
+        }
+
+        .print-report-header h2 {
+            margin: 0;
+            color: #164e9b;
+            font-size: 22px;
+        }
+
+        .print-report-header p {
+            margin: 3px 0;
+            font-size: 13px;
+        }
+
+        .print-report h3 {
+            margin: 12px 0 6px;
+            font-size: 14px;
+            border-bottom: 1px solid #9ca3af;
+            padding-bottom: 4px;
+        }
+
+        .print-summary-table,
+        .print-details-table {
+            width: 100%;
+            margin-bottom: 10px;
+            border-collapse: collapse;
+        }
+
+        .print-summary-table th,
+        .print-summary-table td,
+        .print-details-table th,
+        .print-details-table td {
+            padding: 6px;
+            border: 1px solid #9ca3af;
+            text-align: center;
+        }
+
+        .print-summary-table th,
+        .print-details-table th {
+            background: #eaf2ff !important;
+            font-weight: 700;
+        }
+
+        .print-summary-table td {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .print-two-column {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 12px;
+        }
+
+        .print-two-column th {
+            text-align: left;
+        }
+
+        .print-two-column td {
+            text-align: right;
+        }
+
+        table,
+        tr {
+            page-break-inside: avoid;
+        }
+    }
+</style>
+
+
+<!-- ================= SCREEN REPORT ================= -->
+
+<div class="screen-report">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+                <i class="bi bi-bar-chart-fill text-primary"></i>
+                Hospital Reports
+            </h2>
+
+            <p class="text-muted mb-0">
+                View hospital performance and activity reports
+            </p>
+        </div>
+
+        <button
+            type="button"
+            onclick="window.print()"
+            class="btn btn-primary"
+        >
+            <i class="bi bi-printer"></i>
+            Print Report
+        </button>
+
+    </div>
+
+
+    <!-- Date Filter -->
+
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+
+        <div class="card-body">
+
+            <form method="GET" class="row g-3 align-items-end">
+
+                <div class="col-lg-4 col-md-6">
+                    <label class="form-label fw-semibold">
+                        Start Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="start_date"
+                        class="form-control"
+                        value="{{ start_date }}"
+                    >
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <label class="form-label fw-semibold">
+                        End Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="end_date"
+                        class="form-control"
+                        value="{{ end_date }}"
+                    >
+                </div>
+
+                <div class="col-lg-2 col-md-6 d-grid">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-funnel"></i>
+                        Filter
+                    </button>
+                </div>
+
+                <div class="col-lg-2 col-md-6 d-grid">
+                    <a
+                        href="{% url 'reports' %}"
+                        class="btn btn-secondary"
+                    >
+                        <i class="bi bi-arrow-clockwise"></i>
+                        Reset
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- Main Cards -->
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted mb-1">Total Doctors</p>
+                        <h3 class="fw-bold mb-0">{{ doctor_count }}</h3>
+                    </div>
+
+                    <div class="dashboard-icon bg-primary-subtle text-primary">
+                        <i class="bi bi-person-badge"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted mb-1">Total Patients</p>
+                        <h3 class="fw-bold mb-0">{{ patient_count }}</h3>
+                    </div>
+
+                    <div class="dashboard-icon bg-success-subtle text-success">
+                        <i class="bi bi-people"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted mb-1">Appointments</p>
+                        <h3 class="fw-bold mb-0">{{ appointment_count }}</h3>
+                    </div>
+
+                    <div class="dashboard-icon bg-warning-subtle text-warning">
+                        <i class="bi bi-calendar-check"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted mb-1">Billing Income</p>
+                        <h3 class="fw-bold mb-0">₹{{ total_income }}</h3>
+                    </div>
+
+                    <div class="dashboard-icon bg-info-subtle text-info">
+                        <i class="bi bi-currency-rupee"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Appointment Summary -->
+
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+
+        <div class="card-body">
+
+            <h5 class="fw-bold mb-3">
+                <i class="bi bi-calendar2-week text-primary"></i>
+                Appointment Report
+            </h5>
+
+            <div class="row g-3">
+
+                <div class="col-md-3">
+                    <div class="report-small-card">
+                        <span>Total</span>
+                        <strong>{{ appointment_count }}</strong>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="report-small-card report-pending">
+                        <span>Pending</span>
+                        <strong>{{ pending_appointments }}</strong>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="report-small-card report-completed">
+                        <span>Completed</span>
+                        <strong>{{ completed_appointments }}</strong>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="report-small-card report-cancelled">
+                        <span>Cancelled</span>
+                        <strong>{{ cancelled_appointments }}</strong>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Pharmacy and Lab -->
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body">
+
+                    <h5 class="fw-bold mb-3">
+                        <i class="bi bi-capsule text-info"></i>
+                        Pharmacy Report
+                    </h5>
+
+                    <table class="table">
+                        <tr>
+                            <th>Total Medicines</th>
+                            <td>{{ medicine_count }}</td>
+                        </tr>
+                        <tr>
+                            <th>Available</th>
+                            <td>{{ available_medicines }}</td>
+                        </tr>
+                        <tr>
+                            <th>Low Stock</th>
+                            <td>{{ low_stock_medicines }}</td>
+                        </tr>
+                        <tr>
+                            <th>Out of Stock</th>
+                            <td>{{ out_of_stock_medicines }}</td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body">
+
+                    <h5 class="fw-bold mb-3">
+                        <i class="bi bi-clipboard2-pulse text-success"></i>
+                        Laboratory and Billing
+                    </h5>
+
+                    <table class="table">
+                        <tr>
+                            <th>Laboratory Tests</th>
+                            <td>{{ laboratory_count }}</td>
+                        </tr>
+                        <tr>
+                            <th>Laboratory Income</th>
+                            <td>₹{{ laboratory_income }}</td>
+                        </tr>
+                        <tr>
+                            <th>Total Bills</th>
+                            <td>{{ bill_count }}</td>
+                        </tr>
+                        <tr>
+                            <th>Billing Income</th>
+                            <td>₹{{ total_income }}</td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Recent Appointments -->
+
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+
+        <div class="card-body">
+
+            <h5 class="fw-bold mb-3">Recent Appointments</h5>
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for appointment in recent_appointments %}
+                        <tr>
+                            <td>{{ appointment.patient }}</td>
+                            <td>{{ appointment.doctor }}</td>
+                            <td>{{ appointment.appointment_date }}</td>
+                            <td>{{ appointment.appointment_time }}</td>
+                            <td>{{ appointment.status }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                No appointments found.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Recent Bills -->
+
+    <div class="card border-0 shadow-sm rounded-4">
+
+        <div class="card-body">
+
+            <h5 class="fw-bold mb-3">Recent Bills</h5>
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-success">
+                        <tr>
+                            <th>Bill Number</th>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Total Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for bill in recent_bills %}
+                        <tr>
+                            <td>{{ bill.bill_number }}</td>
+                            <td>{{ bill.patient }}</td>
+                            <td>{{ bill.doctor }}</td>
+                            <td>{{ bill.bill_date }}</td>
+                            <td>₹{{ bill.total_amount }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                No bills found.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= PRINT REPORT ================= -->
+
+<div class="print-report">
+
+    <div class="print-report-header">
+
+        <img
+            src="{% static 'images/hospital photo/logo.png' %}"
+            alt="Hospital Logo"
+        >
+
+        <div>
+            <h2>City Care Hospital</h2>
+            <p>Hospital Management Report</p>
+
+            {% if start_date or end_date %}
+            <small>
+                {{ start_date|default:"Beginning" }}
+                to
+                {{ end_date|default:"Today" }}
+            </small>
+            {% endif %}
+        </div>
+
+    </div>
+
+
+    <table class="print-summary-table">
+
+        <tr>
+            <th>Total Doctors</th>
+            <th>Total Patients</th>
+            <th>Appointments</th>
+            <th>Billing Income</th>
+        </tr>
+
+        <tr>
+            <td>{{ doctor_count }}</td>
+            <td>{{ patient_count }}</td>
+            <td>{{ appointment_count }}</td>
+            <td>₹{{ total_income }}</td>
+        </tr>
+
+    </table>
+
+
+    <h3>Appointment Summary</h3>
+
+    <table class="print-summary-table">
+
+        <tr>
+            <th>Total</th>
+            <th>Pending</th>
+            <th>Completed</th>
+            <th>Cancelled</th>
+        </tr>
+
+        <tr>
+            <td>{{ appointment_count }}</td>
+            <td>{{ pending_appointments }}</td>
+            <td>{{ completed_appointments }}</td>
+            <td>{{ cancelled_appointments }}</td>
+        </tr>
+
+    </table>
+
+
+    <div class="print-two-column">
+
+        <div>
+            <h3>Pharmacy Report</h3>
+
+            <table class="print-details-table">
+                <tr>
+                    <th>Total Medicines</th>
+                    <td>{{ medicine_count }}</td>
+                </tr>
+                <tr>
+                    <th>Available</th>
+                    <td>{{ available_medicines }}</td>
+                </tr>
+                <tr>
+                    <th>Low Stock</th>
+                    <td>{{ low_stock_medicines }}</td>
+                </tr>
+                <tr>
+                    <th>Out of Stock</th>
+                    <td>{{ out_of_stock_medicines }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div>
+            <h3>Laboratory and Billing</h3>
+
+            <table class="print-details-table">
+                <tr>
+                    <th>Laboratory Tests</th>
+                    <td>{{ laboratory_count }}</td>
+                </tr>
+                <tr>
+                    <th>Laboratory Income</th>
+                    <td>₹{{ laboratory_income }}</td>
+                </tr>
+                <tr>
+                    <th>Total Bills</th>
+                    <td>{{ bill_count }}</td>
+                </tr>
+                <tr>
+                    <th>Billing Income</th>
+                    <td>₹{{ total_income }}</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+
+    <h3>Recent Appointments</h3>
+
+    <table class="print-details-table">
+
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for appointment in recent_appointments %}
+            <tr>
+                <td>{{ appointment.patient }}</td>
+                <td>{{ appointment.doctor }}</td>
+                <td>{{ appointment.appointment_date }}</td>
+                <td>{{ appointment.appointment_time }}</td>
+                <td>{{ appointment.status }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No appointments found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+
+    <h3>Recent Bills</h3>
+
+    <table class="print-details-table">
+
+        <thead>
+            <tr>
+                <th>Bill Number</th>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Date</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for bill in recent_bills %}
+            <tr>
+                <td>{{ bill.bill_number }}</td>
+                <td>{{ bill.patient }}</td>
+                <td>{{ bill.doctor }}</td>
+                <td>{{ bill.bill_date }}</td>
+                <td>₹{{ bill.total_amount }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No bills found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

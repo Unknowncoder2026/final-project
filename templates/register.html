@@ -1,0 +1,1116 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Register | City Care Hospital
+    </title>
+
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family: Arial, sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(8, 47, 107, 0.94),
+                    rgba(13, 110, 253, 0.88)
+                ),
+                url("{% static 'images/hospital photo/building.png' %}")
+                center/cover no-repeat;
+        }
+
+
+        .register-page {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 35px 15px;
+        }
+
+
+        .register-wrapper {
+            width: 100%;
+            max-width: 1100px;
+
+            display: grid;
+            grid-template-columns: 1fr 1.25fr;
+
+            overflow: hidden;
+
+            background: white;
+
+            border-radius: 25px;
+
+            box-shadow:
+                0 20px 55px rgba(0, 0, 0, 0.28);
+        }
+
+
+        /* ======================================
+           LEFT SIDE
+        ====================================== */
+
+        .register-left {
+            position: relative;
+
+            padding: 55px 42px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(4, 45, 104, 0.95),
+                    rgba(13, 110, 253, 0.88)
+                ),
+                url("{% static 'images/hospital photo/reception.png' %}")
+                center/cover no-repeat;
+        }
+
+
+        .register-logo {
+            width: 85px;
+            height: 85px;
+
+            padding: 5px;
+
+            margin-bottom: 22px;
+
+            object-fit: contain;
+
+            background: white;
+
+            border-radius: 50%;
+        }
+
+
+        .register-left h1 {
+            margin-bottom: 12px;
+
+            font-size: 38px;
+            font-weight: 900;
+        }
+
+
+        .register-left p {
+            color: #dbeafe;
+
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+
+        .register-benefits {
+            margin-top: 28px;
+        }
+
+
+        .register-benefit {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 14px;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+
+        .register-benefit i {
+            color: #86efac;
+
+            font-size: 18px;
+        }
+
+
+        .back-home-link {
+            margin-top: 25px;
+
+            display: inline-flex;
+            align-items: center;
+
+            gap: 8px;
+
+            color: white;
+
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+
+        .back-home-link:hover {
+            color: #dbeafe;
+        }
+
+
+        /* ======================================
+           RIGHT SIDE
+        ====================================== */
+
+        .register-right {
+            padding: 45px 42px;
+        }
+
+
+        .register-heading {
+            margin-bottom: 28px;
+        }
+
+
+        .register-heading span {
+            color: #0d6efd;
+
+            font-size: 13px;
+            font-weight: 900;
+
+            letter-spacing: 1px;
+        }
+
+
+        .register-heading h2 {
+            margin: 6px 0 7px;
+
+            color: #0f172a;
+
+            font-size: 31px;
+            font-weight: 900;
+        }
+
+
+        .register-heading p {
+            margin: 0;
+
+            color: #64748b;
+
+            font-size: 14px;
+        }
+
+
+        /* ======================================
+           FORM
+        ====================================== */
+
+        .form-label {
+            margin-bottom: 7px;
+
+            color: #334155;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+
+        .form-control,
+        .form-select {
+            min-height: 48px;
+
+            border: 1px solid #d8e0ec;
+            border-radius: 11px;
+
+            background: #f8fafc;
+
+            font-size: 14px;
+
+            transition: 0.25s;
+        }
+
+
+        textarea.form-control {
+            min-height: 90px;
+        }
+
+
+        .form-control:focus,
+        .form-select:focus {
+            background: white;
+
+            border-color: #0d6efd;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(13, 110, 253, 0.11);
+        }
+
+
+        .input-icon-wrap {
+            position: relative;
+        }
+
+
+        .input-icon-wrap > i {
+            position: absolute;
+
+            left: 14px;
+            top: 50%;
+
+            z-index: 5;
+
+            transform: translateY(-50%);
+
+            color: #64748b;
+        }
+
+
+        .input-icon-wrap .form-control,
+        .input-icon-wrap .form-select {
+            padding-left: 42px;
+        }
+
+
+        /* ======================================
+           PASSWORD
+        ====================================== */
+
+        .password-wrap {
+            position: relative;
+        }
+
+
+        .password-toggle {
+            position: absolute;
+
+            right: 13px;
+            top: 50%;
+
+            z-index: 10;
+
+            transform: translateY(-50%);
+
+            color: #64748b;
+
+            background: transparent;
+
+            border: none;
+
+            cursor: pointer;
+        }
+
+
+        .password-wrap input {
+            padding-right: 45px !important;
+        }
+
+
+        /* ======================================
+           CAPTCHA
+        ====================================== */
+
+        .captcha-box {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .captcha-code {
+            min-width: 125px;
+
+            height: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 0 15px;
+
+            color: #0f172a;
+
+            background:
+                repeating-linear-gradient(
+                    45deg,
+                    #e0f2fe,
+                    #e0f2fe 5px,
+                    #dbeafe 5px,
+                    #dbeafe 10px
+                );
+
+            border: 1px solid #bfdbfe;
+            border-radius: 11px;
+
+            font-size: 20px;
+            font-weight: 900;
+
+            letter-spacing: 5px;
+
+            user-select: none;
+        }
+
+
+        .captcha-refresh {
+            width: 48px;
+            height: 48px;
+
+            border: none;
+            border-radius: 11px;
+
+            color: white;
+
+            background: #0d6efd;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+        }
+
+
+        .captcha-refresh:hover {
+            background: #0750ad;
+
+            transform: rotate(15deg);
+        }
+
+
+        .captcha-input {
+            flex: 1;
+        }
+
+
+        /* ======================================
+           ERRORS
+        ====================================== */
+
+        .errorlist {
+            margin: 6px 0 0;
+
+            padding-left: 18px;
+
+            color: #dc2626;
+
+            font-size: 12px;
+        }
+
+
+        .form-error-box {
+            padding: 12px 15px;
+
+            margin-bottom: 20px;
+
+            color: #991b1b;
+
+            background: #fee2e2;
+
+            border: 1px solid #fecaca;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+        }
+
+
+        /* ======================================
+           BUTTON
+        ====================================== */
+
+        .register-btn {
+            width: 100%;
+
+            padding: 13px;
+
+            margin-top: 10px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0d6efd,
+                    #0750ad
+                );
+
+            border: none;
+
+            border-radius: 11px;
+
+            font-size: 15px;
+            font-weight: 800;
+
+            box-shadow:
+                0 9px 22px
+                rgba(13, 110, 253, 0.24);
+
+            transition: 0.25s;
+        }
+
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+        }
+
+
+        .login-text {
+            margin-top: 22px;
+
+            text-align: center;
+
+            color: #64748b;
+
+            font-size: 14px;
+        }
+
+
+        .login-text a {
+            color: #0d6efd;
+
+            font-weight: 800;
+
+            text-decoration: none;
+        }
+
+
+        /* ======================================
+           RESPONSIVE
+        ====================================== */
+
+        @media (max-width: 900px) {
+
+            .register-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .register-left {
+                padding: 35px 28px;
+            }
+
+            .register-left h1 {
+                font-size: 30px;
+            }
+
+            .register-right {
+                padding: 35px 28px;
+            }
+
+        }
+
+
+        @media (max-width: 520px) {
+
+            .register-page {
+                padding: 15px 10px;
+            }
+
+            .register-left,
+            .register-right {
+                padding: 28px 20px;
+            }
+
+            .register-heading h2 {
+                font-size: 26px;
+            }
+
+
+            .captcha-box {
+                flex-wrap: wrap;
+            }
+
+
+            .captcha-code {
+                min-width: 120px;
+            }
+
+
+            .captcha-input {
+                width: 100%;
+                flex: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="register-page">
+
+
+    <div class="register-wrapper">
+
+
+        <!-- ==================================
+             LEFT SIDE
+        =================================== -->
+
+        <div class="register-left">
+
+
+            <img
+                src="{% static 'images/hospital photo/logo.png' %}"
+                alt="City Care Hospital"
+                class="register-logo"
+            >
+
+
+            <h1>
+                City Care Hospital
+            </h1>
+
+
+            <p>
+                Create your secure hospital account and access
+                appointments, medical services and role-based
+                dashboards.
+            </p>
+
+
+            <div class="register-benefits">
+
+
+                <div class="register-benefit">
+                    <i class="bi bi-shield-check"></i>
+                    Secure account registration
+                </div>
+
+
+                <div class="register-benefit">
+                    <i class="bi bi-person-badge-fill"></i>
+                    Doctor, Nurse, Staff & Patient roles
+                </div>
+
+
+                <div class="register-benefit">
+                    <i class="bi bi-calendar-check-fill"></i>
+                    Easy appointment access
+                </div>
+
+
+                <div class="register-benefit">
+                    <i class="bi bi-heart-pulse-fill"></i>
+                    Connected hospital services
+                </div>
+
+
+            </div>
+
+
+            <a
+                href="{% url 'user_home' %}"
+                class="back-home-link"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Back to Home
+            </a>
+
+
+        </div>
+
+
+        <!-- ==================================
+             RIGHT SIDE
+        =================================== -->
+
+        <div class="register-right">
+
+
+            <div class="register-heading">
+
+                <span>
+                    CREATE ACCOUNT
+                </span>
+
+                <h2>
+                    Register with City Care Hospital
+                </h2>
+
+                <p>
+                    Enter your details to create a secure account.
+                </p>
+
+            </div>
+
+
+            {% if form.non_field_errors %}
+
+                <div class="form-error-box">
+
+                    {% for error in form.non_field_errors %}
+
+                        <div>
+                            {{ error }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <div class="row g-3">
+
+
+                    <!-- Username -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Username
+                        </label>
+
+                        <div class="input-icon-wrap">
+
+                            <i class="bi bi-person-fill"></i>
+
+                            {{ form.username }}
+
+                        </div>
+
+                        {{ form.username.errors }}
+
+                    </div>
+
+
+                    <!-- Role -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Register As
+                        </label>
+
+                        <div class="input-icon-wrap">
+
+                            <i class="bi bi-person-badge-fill"></i>
+
+                            {{ form.role }}
+
+                        </div>
+
+                        {{ form.role.errors }}
+
+                    </div>
+
+
+                    <!-- First Name -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            First Name
+                        </label>
+
+                        <div class="input-icon-wrap">
+
+                            <i class="bi bi-person"></i>
+
+                            {{ form.first_name }}
+
+                        </div>
+
+                        {{ form.first_name.errors }}
+
+                    </div>
+
+
+                    <!-- Last Name -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Last Name
+                        </label>
+
+                        <div class="input-icon-wrap">
+
+                            <i class="bi bi-person"></i>
+
+                            {{ form.last_name }}
+
+                        </div>
+
+                        {{ form.last_name.errors }}
+
+                    </div>
+
+
+                    <!-- Email -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Email Address
+                        </label>
+
+                        <div class="input-icon-wrap">
+
+                            <i class="bi bi-envelope-fill"></i>
+
+                            {{ form.email }}
+
+                        </div>
+
+                        {{ form.email.errors }}
+
+                    </div>
+
+
+                    <!-- Phone -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Mobile Number
+                        </label>
+
+                        <div class="input-icon-wrap">
+
+                            <i class="bi bi-telephone-fill"></i>
+
+                            {{ form.phone }}
+
+                        </div>
+
+                        {{ form.phone.errors }}
+
+                    </div>
+
+
+                    <!-- Aadhaar -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Aadhaar Number
+                        </label>
+
+                        <div class="input-icon-wrap">
+
+                            <i class="bi bi-person-vcard-fill"></i>
+
+                            {{ form.aadhaar_number }}
+
+                        </div>
+
+                        {{ form.aadhaar_number.errors }}
+
+                    </div>
+
+
+                    <!-- Address -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Address
+                        </label>
+
+                        {{ form.address }}
+
+                        {{ form.address.errors }}
+
+                    </div>
+
+
+                    <!-- Password -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Password
+                        </label>
+
+                        <div class="password-wrap">
+
+                            {{ form.password1 }}
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="id_password1"
+                            >
+
+                                <i class="bi bi-eye-fill"></i>
+
+                            </button>
+
+                        </div>
+
+                        {{ form.password1.errors }}
+
+                    </div>
+
+
+                    <!-- Confirm Password -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Confirm Password
+                        </label>
+
+                        <div class="password-wrap">
+
+                            {{ form.password2 }}
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="id_password2"
+                            >
+
+                                <i class="bi bi-eye-fill"></i>
+
+                            </button>
+
+                        </div>
+
+                        {{ form.password2.errors }}
+
+                    </div>
+
+
+                    <!-- CAPTCHA -->
+
+                    <div class="col-12">
+
+                        <label class="form-label">
+                            Security Verification
+                        </label>
+
+
+                        <div class="captcha-box">
+
+
+                            <div
+                                class="captcha-code"
+                                id="captchaCode"
+                            >
+                                {{ captcha_code }}
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="captcha-refresh"
+                                id="refreshCaptcha"
+                                title="Refresh CAPTCHA"
+                            >
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </button>
+
+
+                            <div class="captcha-input">
+
+                                {{ form.captcha }}
+
+                                {{ form.captcha.errors }}
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Terms -->
+
+                    <div class="col-12">
+
+                        <div class="form-check mt-1">
+
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="terms"
+                                required
+                            >
+
+                            <label
+                                class="form-check-label"
+                                for="terms"
+                            >
+                                I agree to the Terms & Privacy Policy.
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Button -->
+
+                    <div class="col-12">
+
+                        <button
+                            type="submit"
+                            class="register-btn"
+                        >
+
+                            <i class="bi bi-person-plus-fill"></i>
+
+                            Create Account
+
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+
+            </form>
+
+
+            <div class="login-text">
+
+                Already have an account?
+
+                <a href="{% url 'login' %}">
+                    Login Here
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* ======================================
+       PASSWORD SHOW / HIDE
+    ====================================== */
+
+    document
+        .querySelectorAll(".password-toggle")
+        .forEach(function(button) {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    const targetId =
+                        button.getAttribute("data-target");
+
+                    const input =
+                        document.getElementById(targetId);
+
+                    const icon =
+                        button.querySelector("i");
+
+
+                    if (input.type === "password") {
+
+                        input.type = "text";
+
+                        icon.classList.remove(
+                            "bi-eye-fill"
+                        );
+
+                        icon.classList.add(
+                            "bi-eye-slash-fill"
+                        );
+
+                    } else {
+
+                        input.type = "password";
+
+                        icon.classList.remove(
+                            "bi-eye-slash-fill"
+                        );
+
+                        icon.classList.add(
+                            "bi-eye-fill"
+                        );
+
+                    }
+
+                }
+            );
+
+        });
+
+
+    /* ======================================
+       CAPTCHA REFRESH
+    ====================================== */
+
+    document
+        .getElementById("refreshCaptcha")
+        .addEventListener(
+            "click",
+            function() {
+
+                fetch("{% url 'register' %}?captcha=refresh")
+                    .then(response => response.json())
+                    .then(data => {
+
+                        document
+                            .getElementById("captchaCode")
+                            .textContent =
+                            data.captcha;
+
+                    })
+                    .catch(error => {
+
+                        console.log(
+                            "CAPTCHA refresh error:",
+                            error
+                        );
+
+                    });
+
+            }
+        );
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Patients{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1">Patients List</h2>
+        <p class="text-muted mb-0">Manage registered patients</p>
+    </div>
+
+    <a href="{% url 'add_patient' %}" class="btn btn-success">
+        <i class="bi bi-person-plus"></i>
+        Add Patient
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body">
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+
+                <thead class="table-success">
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for patient in patients %}
+
+                    <tr>
+                        <td class="fw-semibold">
+                            {{ patient.name }}
+                        </td>
+
+                        <td>{{ patient.age }}</td>
+
+                        <td>
+                            <span class="badge bg-info text-dark">
+                                {{ patient.gender }}
+                            </span>
+                        </td>
+
+                        <td>{{ patient.phone }}</td>
+
+                        <td>
+                            {{ patient.address|default:"Not provided" }}
+                        </td>
+
+                        <td>
+                            <a
+                                href="{% url 'edit_patient' patient.id %}"
+                                class="btn btn-warning btn-sm"
+                            >
+                                <i class="bi bi-pencil-square"></i>
+                                Edit
+                            </a>
+
+                            <a
+                                href="{% url 'delete_patient' patient.id %}"
+                                class="btn btn-danger btn-sm"
+                            >
+                                <i class="bi bi-trash"></i>
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">
+                            No patients found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,625 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Login - City Care Hospital</title>
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <!-- Project CSS -->
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .login-body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 25px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-family: Arial, sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(13, 71, 161, 0.96),
+                    rgba(14, 165, 233, 0.9)
+                );
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 430px;
+        }
+
+        .login-box {
+            width: 100%;
+            padding: 35px;
+
+            text-align: center;
+
+            background: #ffffff;
+            border-radius: 22px;
+
+            box-shadow:
+                0 20px 55px rgba(0, 0, 0, 0.28);
+        }
+
+        .login-logo {
+            width: 90px;
+            height: 90px;
+
+            padding: 5px;
+            margin-bottom: 10px;
+
+            object-fit: contain;
+
+            background: #ffffff;
+            border: 3px solid #eaf2ff;
+            border-radius: 50%;
+        }
+
+        .login-box h2 {
+            margin: 5px 0;
+
+            color: #0d47a1;
+            font-size: 27px;
+            font-weight: 800;
+        }
+
+        .login-subtitle {
+            margin: 5px 0 24px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .login-error {
+            padding: 12px 14px;
+            margin-bottom: 18px;
+
+            color: #b91c1c;
+            text-align: left;
+
+            background: #fee2e2;
+            border: 1px solid #fecaca;
+            border-radius: 10px;
+        }
+
+        .login-message {
+            padding: 12px 14px;
+            margin-bottom: 18px;
+
+            text-align: left;
+            border-radius: 10px;
+        }
+
+        .login-message.success {
+            color: #166534;
+            background: #dcfce7;
+            border: 1px solid #bbf7d0;
+        }
+
+        .login-message.warning {
+            color: #92400e;
+            background: #fef3c7;
+            border: 1px solid #fde68a;
+        }
+
+        .input-group {
+            margin-bottom: 17px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 7px;
+
+            color: #334155;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper .left-icon {
+            position: absolute;
+            top: 50%;
+            left: 13px;
+
+            color: #64748b;
+            font-size: 18px;
+
+            transform: translateY(-50%);
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            min-height: 48px;
+            padding: 12px 45px 12px 42px;
+
+            color: #1e293b;
+            background: #f8fafc;
+
+            border: 1px solid #cbd5e1;
+            border-radius: 11px;
+
+            font-size: 15px;
+            outline: none;
+
+            transition: 0.25s;
+        }
+
+        .input-wrapper input:focus {
+            background: #ffffff;
+            border-color: #0d6efd;
+
+            box-shadow:
+                0 0 0 4px rgba(13, 110, 253, 0.12);
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+
+            padding: 5px;
+
+            color: #64748b;
+            background: transparent;
+
+            border: none;
+            cursor: pointer;
+
+            font-size: 18px;
+
+            transform: translateY(-50%);
+        }
+
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 10px;
+            margin: 2px 0 20px;
+
+            font-size: 14px;
+        }
+
+        .remember-box {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            color: #475569;
+        }
+
+        .remember-box input {
+            width: 16px;
+            height: 16px;
+            accent-color: #0d6efd;
+        }
+
+        .forgot-link {
+            color: #0d6efd;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            min-height: 49px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+
+            color: #ffffff;
+            background:
+                linear-gradient(
+                    135deg,
+                    #0d6efd,
+                    #0d47a1
+                );
+
+            border: none;
+            border-radius: 11px;
+
+            font-size: 16px;
+            font-weight: 700;
+
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 9px 20px rgba(13, 110, 253, 0.3);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            margin: 23px 0;
+
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #e2e8f0;
+        }
+
+        .register-link {
+            display: block;
+            width: 100%;
+            padding: 12px;
+
+            color: #0d6efd;
+            background: #eff6ff;
+
+            border: 1px solid #bfdbfe;
+            border-radius: 11px;
+
+            font-weight: 700;
+            text-decoration: none;
+
+            transition: 0.25s;
+        }
+
+        .register-link:hover {
+            color: #ffffff;
+            background: #0d6efd;
+        }
+
+        .home-link {
+            display: inline-block;
+            margin-top: 18px;
+
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .home-link:hover {
+            color: #0d6efd;
+        }
+
+        .security-note {
+            margin-top: 20px;
+            padding-top: 16px;
+
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 480px) {
+            .login-body {
+                padding: 15px;
+            }
+
+            .login-box {
+                padding: 28px 20px;
+            }
+
+            .login-options {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body class="login-body">
+
+<div class="login-container">
+
+    <div class="login-box">
+
+        <img
+            src="{% static 'images/hospital photo/logo.png' %}"
+            alt="City Care Hospital Logo"
+            class="login-logo"
+        >
+
+        <h2>City Care Hospital</h2>
+
+        <p class="login-subtitle">
+            Secure Hospital Management Login
+        </p>
+
+
+        <!-- Django Messages -->
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="login-message {{ message.tags }}">
+                    <i class="bi bi-info-circle-fill"></i>
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+        <!-- Login Error -->
+
+        {% if error %}
+
+            <div class="login-error">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                {{ error }}
+            </div>
+
+        {% endif %}
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <!-- Username / Mobile -->
+
+            <div class="input-group">
+
+                <label for="username">
+                    Username or Mobile Number
+                </label>
+
+                <div class="input-wrapper">
+
+                    <i class="bi bi-person-fill left-icon"></i>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter username or mobile number"
+                        value="{{ request.POST.username|default:'' }}"
+                        required
+                        autocomplete="username"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- Account Role -->
+
+            <div class="input-group">
+
+                <label for="role">
+                    Login As
+                </label>
+
+                <div class="input-wrapper">
+
+                    <i class="bi bi-person-badge-fill left-icon"></i>
+
+                    <select
+                        id="role"
+                        name="role"
+                        required
+                        style="
+                            width:100%;
+                            min-height:48px;
+                            padding:12px 42px;
+                            color:#1e293b;
+                            background:#f8fafc;
+                            border:1px solid #cbd5e1;
+                            border-radius:11px;
+                            font-size:15px;
+                            outline:none;
+                        "
+                    >
+                        <option value="">Select your role</option>
+                        <option value="Patient" {% if selected_role == "Patient" %}selected{% endif %}>Patient</option>
+                        <option value="Doctor" {% if selected_role == "Doctor" %}selected{% endif %}>Doctor</option>
+                        <option value="Nurse" {% if selected_role == "Nurse" %}selected{% endif %}>Nurse</option>
+                        <option value="Staff" {% if selected_role == "Staff" %}selected{% endif %}>Staff</option>
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- Password -->
+
+            <div class="input-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <div class="input-wrapper">
+
+                    <i class="bi bi-lock-fill left-icon"></i>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                        autocomplete="current-password"
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        id="togglePassword"
+                        aria-label="Show or hide password"
+                    >
+                        <i
+                            class="bi bi-eye"
+                            id="passwordIcon"
+                        ></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Remember / Forgot -->
+
+            <div class="login-options">
+
+                <label class="remember-box">
+
+                    <input
+                        type="checkbox"
+                        name="remember_me"
+                        id="remember_me"
+                    >
+
+                    <span>Remember Me</span>
+
+                </label>
+
+                <a
+                    href="{% url 'forgot_password' %}"
+                    class="forgot-link"
+                >
+                    Forgot Password?
+                </a>
+
+            </div>
+
+
+            <!-- Login Button -->
+
+            <button
+                type="submit"
+                class="login-btn"
+            >
+                <i class="bi bi-shield-lock-fill"></i>
+                Secure Login
+            </button>
+
+        </form>
+
+
+        <div class="divider">
+            New to City Care Hospital?
+        </div>
+
+
+        <!-- Register Link -->
+
+        <a
+            href="{% url 'register' %}"
+            class="register-link"
+        >
+            <i class="bi bi-person-plus-fill"></i>
+            Create New Account
+        </a>
+
+
+        <!-- Public Website -->
+
+        <a
+            href="{% url 'user_home' %}"
+            class="home-link"
+        >
+            <i class="bi bi-arrow-left"></i>
+            Back to Public Website
+        </a>
+
+
+        <div class="security-note">
+
+            <i class="bi bi-shield-check text-success"></i>
+
+            Admin login is protected. Doctor, Nurse and Staff accounts
+            require administrator approval.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+    const togglePassword =
+        document.getElementById("togglePassword");
+
+    const passwordInput =
+        document.getElementById("password");
+
+    const passwordIcon =
+        document.getElementById("passwordIcon");
+
+    togglePassword.addEventListener("click", function () {
+
+        if (passwordInput.type === "password") {
+
+            passwordInput.type = "text";
+
+            passwordIcon.classList.remove("bi-eye");
+            passwordIcon.classList.add("bi-eye-slash");
+
+        } else {
+
+            passwordInput.type = "password";
+
+            passwordIcon.classList.remove("bi-eye-slash");
+            passwordIcon.classList.add("bi-eye");
+
+        }
+
+    });
+
+
+</script>
+
+</body>
+</html>

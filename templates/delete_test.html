@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Delete Laboratory Test
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-6">
+
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
+            <div class="card-header bg-danger text-white py-3">
+
+                <h3 class="mb-0">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    Delete Test
+                </h3>
+
+            </div>
+
+            <div class="card-body p-4">
+
+                <p>
+                    क्या आप यह laboratory test delete करना चाहते हैं?
+                </p>
+
+                <div class="delete-info-box mb-4">
+
+                    <p>
+                        <span>Patient</span>
+                        <strong>{{ test.patient }}</strong>
+                    </p>
+
+                    <p>
+                        <span>Test Name</span>
+                        <strong>{{ test.test_name }}</strong>
+                    </p>
+
+                    <p>
+                        <span>Test Charge</span>
+                        <strong>₹{{ test.test_charge }}</strong>
+                    </p>
+
+                </div>
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="btn btn-danger"
+                    >
+                        <i class="bi bi-trash"></i>
+                        Yes, Delete
+                    </button>
+
+                    <a
+                        href="{% url 'laboratory' %}"
+                        class="btn btn-secondary"
+                    >
+                        Cancel
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,325 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Bill Invoice</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 30px;
+            background: #eef4fb;
+            font-family: Arial, sans-serif;
+            color: #1f2937;
+        }
+
+        .invoice {
+            max-width: 850px;
+            margin: auto;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .invoice-header {
+            background: linear-gradient(135deg, #0d6efd, #084298);
+            color: white;
+            padding: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hospital-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .hospital-info img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            background: white;
+            padding: 5px;
+        }
+
+        .hospital-info h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .hospital-info p {
+            margin: 5px 0 0;
+            font-size: 14px;
+        }
+
+        .invoice-title {
+            text-align: right;
+        }
+
+        .invoice-title h2 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .invoice-body {
+            padding: 30px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 25px;
+        }
+
+        .detail-box {
+            background: #f8fafc;
+            padding: 14px;
+            border-radius: 10px;
+            border-left: 4px solid #0d6efd;
+        }
+
+        .detail-box span {
+            display: block;
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+
+        .detail-box strong {
+            font-size: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th {
+            background: #eaf2ff;
+            color: #0d47a1;
+            text-align: left;
+            padding: 13px;
+            border-bottom: 2px solid #c7dbf8;
+        }
+
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .amount {
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .total-row td {
+            background: #e8f5e9;
+            color: #166534;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .footer-area {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 35px;
+            gap: 20px;
+        }
+
+        .thanks-box {
+            background: #eff6ff;
+            padding: 16px;
+            border-radius: 10px;
+            flex: 1;
+        }
+
+        .signature {
+            width: 220px;
+            text-align: center;
+            padding-top: 35px;
+        }
+
+        .signature-line {
+            border-top: 1px solid #111827;
+            margin-bottom: 8px;
+        }
+
+        .print-actions {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .print-btn {
+            border: none;
+            background: #0d6efd;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 9px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .print-btn:hover {
+            background: #084298;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .invoice {
+                box-shadow: none;
+                border-radius: 0;
+                max-width: 100%;
+            }
+
+            .print-actions {
+                display: none;
+            }
+        }
+
+        @media (max-width: 650px) {
+            body {
+                padding: 10px;
+            }
+
+            .invoice-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .invoice-title {
+                text-align: left;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-area {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="invoice">
+
+    <div class="invoice-header">
+
+        <div class="hospital-info">
+            <img
+                src="{% static 'images/hospital photo/logo.png' %}"
+                alt="Hospital Logo"
+            >
+
+            <div>
+                <h1>City Care Hospital</h1>
+                <p>Compassionate Care, Better Health</p>
+                <p>Phone: +91 98765 43210</p>
+            </div>
+        </div>
+
+        <div class="invoice-title">
+            <h2>PATIENT BILL</h2>
+            <p>Bill No: {{ bill.bill_number|default:"—" }}</p>
+            <p>Date: {{ bill.bill_date }}</p>
+        </div>
+
+    </div>
+
+    <div class="invoice-body">
+
+        <div class="details-grid">
+
+            <div class="detail-box">
+                <span>Patient Name</span>
+                <strong>{{ bill.patient }}</strong>
+            </div>
+
+            <div class="detail-box">
+                <span>Doctor Name</span>
+                <strong>{{ bill.doctor }}</strong>
+            </div>
+
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Charge Description</th>
+                    <th class="amount">Amount</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Doctor Consultation Fee</td>
+                    <td class="amount">₹{{ bill.doctor_fee }}</td>
+                </tr>
+
+                <tr>
+                    <td>Medicine Charge</td>
+                    <td class="amount">₹{{ bill.medicine_charge }}</td>
+                </tr>
+
+                <tr>
+                    <td>Test Charge</td>
+                    <td class="amount">₹{{ bill.test_charge }}</td>
+                </tr>
+
+                <tr>
+                    <td>Other Charge</td>
+                    <td class="amount">₹{{ bill.other_charge }}</td>
+                </tr>
+
+                <tr class="total-row">
+                    <td>Grand Total</td>
+                    <td class="amount">₹{{ bill.total_amount }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="footer-area">
+
+            <div class="thanks-box">
+                <strong>Thank you for choosing City Care Hospital.</strong>
+                <p>
+                    Please keep this invoice for future reference.
+                </p>
+            </div>
+
+            <div class="signature">
+                <div class="signature-line"></div>
+                Authorized Signature
+            </div>
+
+        </div>
+
+        <div class="print-actions">
+            <button class="print-btn" onclick="window.print()">
+                🖨 Print / Save PDF
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

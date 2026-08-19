@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit Laboratory Test
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-8 col-md-10">
+
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
+            <div class="card-header bg-warning py-3">
+
+                <h3 class="mb-0">
+                    <i class="bi bi-pencil-square"></i>
+                    Edit Laboratory Test
+                </h3>
+
+            </div>
+
+            <div class="card-body p-4">
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <div class="medicine-form">
+                        {{ form.as_p }}
+                    </div>
+
+                    <div class="mt-4">
+
+                        <button
+                            type="submit"
+                            class="btn btn-warning px-4"
+                        >
+                            <i class="bi bi-check-circle"></i>
+                            Update Test
+                        </button>
+
+                        <a
+                            href="{% url 'laboratory' %}"
+                            class="btn btn-secondary px-4"
+                        >
+                            <i class="bi bi-arrow-left"></i>
+                            Back
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

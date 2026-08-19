@@ -1,0 +1,415 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Laboratory{% endblock %}
+
+{% block content %}
+
+<style>
+    .lab-print-report {
+        display: none;
+    }
+
+    @media print {
+        @page {
+            size: A4 portrait;
+            margin: 12mm;
+        }
+
+        .sidebar,
+        .topbar,
+        .lab-screen-page,
+        .no-print {
+            display: none !important;
+        }
+
+        .main-wrapper,
+        .page-content {
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        body {
+            margin: 0 !important;
+            background: white !important;
+        }
+
+        .lab-print-report {
+            display: block !important;
+            width: 100%;
+            color: #111;
+            font-family: Arial, sans-serif;
+        }
+
+        .lab-print-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+            border-bottom: 2px solid #0d6efd;
+        }
+
+        .lab-print-header img {
+            width: 65px !important;
+            height: 65px !important;
+            object-fit: contain !important;
+        }
+
+        .lab-print-header h2 {
+            margin: 0;
+            color: #164e9b;
+            font-size: 22px;
+        }
+
+        .lab-print-header p {
+            margin: 4px 0 0;
+            font-size: 13px;
+        }
+
+        .lab-print-summary {
+            width: 100%;
+            margin-bottom: 18px;
+            border-collapse: collapse;
+        }
+
+        .lab-print-summary th,
+        .lab-print-summary td {
+            padding: 9px;
+            border: 1px solid #9ca3af;
+            text-align: center;
+        }
+
+        .lab-print-summary th {
+            background: #eaf2ff !important;
+        }
+
+        .lab-print-summary td {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .lab-print-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+
+        .lab-print-table th,
+        .lab-print-table td {
+            padding: 8px;
+            border: 1px solid #9ca3af;
+            text-align: center;
+        }
+
+        .lab-print-table th {
+            background: #dff6fb !important;
+        }
+
+        .lab-print-table tr {
+            page-break-inside: avoid;
+        }
+    }
+</style>
+
+
+<!-- Screen Page -->
+
+<div class="lab-screen-page">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+                <i class="bi bi-clipboard2-pulse text-info"></i>
+                Laboratory Tests
+            </h2>
+
+            <p class="text-muted mb-0">
+                Manage patient tests and reports
+            </p>
+        </div>
+
+        <div>
+            <a
+                href="{% url 'add_test' %}"
+                class="btn btn-primary"
+            >
+                <i class="bi bi-plus-circle"></i>
+                Add Test
+            </a>
+
+            <button
+                type="button"
+                onclick="window.print()"
+                class="btn btn-success"
+            >
+                <i class="bi bi-printer"></i>
+                Print List
+            </button>
+        </div>
+
+    </div>
+
+
+    <!-- Summary Cards -->
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted mb-1">Total Tests</p>
+                        <h3 class="fw-bold mb-0">{{ total_tests }}</h3>
+                    </div>
+
+                    <div class="dashboard-icon bg-primary-subtle text-primary">
+                        <i class="bi bi-clipboard2-pulse"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted mb-1">Today's Tests</p>
+                        <h3 class="fw-bold mb-0">{{ today_tests }}</h3>
+                    </div>
+
+                    <div class="dashboard-icon bg-success-subtle text-success">
+                        <i class="bi bi-calendar-check"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted mb-1">Laboratory Income</p>
+                        <h3 class="fw-bold mb-0">
+                            ₹{{ total_lab_income }}
+                        </h3>
+                    </div>
+
+                    <div class="dashboard-icon bg-warning-subtle text-warning">
+                        <i class="bi bi-currency-rupee"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Search -->
+
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+
+        <div class="card-body">
+
+            <form method="GET" class="row g-2">
+
+                <div class="col-lg-8">
+                    <input
+                        type="text"
+                        name="search"
+                        class="form-control"
+                        placeholder="Search patient, test name or result..."
+                        value="{{ search }}"
+                    >
+                </div>
+
+                <div class="col-lg-2 d-grid">
+                    <button
+                        type="submit"
+                        class="btn btn-info text-white"
+                    >
+                        <i class="bi bi-search"></i>
+                        Search
+                    </button>
+                </div>
+
+                <div class="col-lg-2 d-grid">
+                    <a
+                        href="{% url 'laboratory' %}"
+                        class="btn btn-secondary"
+                    >
+                        Reset
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- Table -->
+
+    <div class="card border-0 shadow-sm rounded-4">
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-info">
+                        <tr>
+                            <th>S.No.</th>
+                            <th>Patient</th>
+                            <th>Test Name</th>
+                            <th>Test Charge</th>
+                            <th>Test Result</th>
+                            <th>Test Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for test in tests %}
+
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ test.patient }}</td>
+                            <td>{{ test.test_name }}</td>
+                            <td>₹{{ test.test_charge }}</td>
+                            <td>{{ test.test_result }}</td>
+                            <td>{{ test.test_date }}</td>
+
+                            <td>
+                                <a
+                                    href="{% url 'print_test_report' test.id %}"
+                                    class="btn btn-success btn-sm"
+                                    target="_blank"
+                                >
+                                    Print
+                                </a>
+
+                                <a
+                                    href="{% url 'edit_test' test.id %}"
+                                    class="btn btn-warning btn-sm"
+                                >
+                                    Edit
+                                </a>
+
+                                <a
+                                    href="{% url 'delete_test' test.id %}"
+                                    class="btn btn-danger btn-sm"
+                                >
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+                            <td colspan="7" class="text-center py-4">
+                                No laboratory tests found.
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Print Only Report -->
+
+<div class="lab-print-report">
+
+    <div class="lab-print-header">
+
+        <img
+            src="{% static 'images/hospital photo/logo.png' %}"
+            alt="City Care Hospital Logo"
+        >
+
+        <div>
+            <h2>City Care Hospital</h2>
+            <p>Laboratory Test Report List</p>
+        </div>
+
+    </div>
+
+
+    <table class="lab-print-summary">
+
+        <tr>
+            <th>Total Tests</th>
+            <th>Today's Tests</th>
+            <th>Laboratory Income</th>
+        </tr>
+
+        <tr>
+            <td>{{ total_tests }}</td>
+            <td>{{ today_tests }}</td>
+            <td>₹{{ total_lab_income }}</td>
+        </tr>
+
+    </table>
+
+
+    <table class="lab-print-table">
+
+        <thead>
+            <tr>
+                <th>S.No.</th>
+                <th>Patient</th>
+                <th>Test Name</th>
+                <th>Test Charge</th>
+                <th>Test Result</th>
+                <th>Test Date</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for test in tests %}
+
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ test.patient }}</td>
+                <td>{{ test.test_name }}</td>
+                <td>₹{{ test.test_charge }}</td>
+                <td>{{ test.test_result }}</td>
+                <td>{{ test.test_date }}</td>
+            </tr>
+
+            {% empty %}
+
+            <tr>
+                <td colspan="6">
+                    No laboratory tests found.
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

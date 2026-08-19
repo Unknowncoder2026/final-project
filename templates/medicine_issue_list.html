@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Medicine Issue History
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+        <h2 class="fw-bold mb-1">
+            Medicine Issue History
+        </h2>
+
+        <p class="text-muted mb-0">
+            View patient medicine issue records
+        </p>
+    </div>
+
+    <div>
+        <a
+            href="{% url 'issue_medicine' %}"
+            class="btn btn-primary"
+        >
+            <i class="bi bi-plus-circle"></i>
+            Issue Medicine
+        </a>
+
+        <button
+            type="button"
+            onclick="window.print()"
+            class="btn btn-success no-print"
+        >
+            <i class="bi bi-printer"></i>
+            Print List
+        </button>
+    </div>
+
+</div>
+
+
+<div class="card border-0 shadow-sm rounded-4 mb-4 no-print">
+
+    <div class="card-body">
+
+        <form method="GET" class="row g-2">
+
+            <div class="col-md-9">
+
+                <input
+                    type="text"
+                    name="search"
+                    class="form-control"
+                    placeholder="Search patient name..."
+                    value="{{ search }}"
+                >
+
+            </div>
+
+            <div class="col-md-3">
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Search
+                </button>
+
+                <a
+                    href="{% url 'medicine_issue_list' %}"
+                    class="btn btn-secondary"
+                >
+                    Reset
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<div class="card border-0 shadow-sm rounded-4">
+
+    <div class="card-body">
+
+        <div class="print-heading">
+            <h3>City Care Hospital</h3>
+            <p>Medicine Issue History</p>
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-primary">
+
+                    <tr>
+                        <th>Patient</th>
+                        <th>Medicine</th>
+                        <th>Quantity</th>
+                        <th>Issue Date</th>
+                        <th>Issued By</th>
+                        <th class="no-print">Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for issue in issues %}
+
+                    <tr>
+
+                        <td class="fw-semibold">
+                            {{ issue.patient }}
+                        </td>
+
+                        <td>
+                            {{ issue.medicine }}
+                        </td>
+
+                        <td>
+                            <span class="badge bg-info text-dark">
+                                {{ issue.quantity }}
+                            </span>
+                        </td>
+
+                        <td>
+                            {{ issue.issue_date }}
+                        </td>
+
+                        <td>
+                            {{ issue.issued_by|default:"Admin" }}
+                        </td>
+
+                        <td class="no-print">
+
+                            <a
+                                href="{% url 'print_medicine_issue' issue.id %}"
+                                class="btn btn-success btn-sm"
+                                target="_blank"
+                            >
+                                <i class="bi bi-printer"></i>
+                                Print
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td
+                            colspan="6"
+                            class="text-center text-muted py-4"
+                        >
+                            No medicine issue records found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

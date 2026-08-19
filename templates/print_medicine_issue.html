@@ -1,0 +1,191 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Medicine Issue Slip</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 30px;
+            background: #eef4fb;
+            font-family: Arial, sans-serif;
+            color: #1e293b;
+        }
+
+        .issue-slip {
+            max-width: 750px;
+            margin: auto;
+            padding: 30px;
+
+            background: white;
+            border-radius: 16px;
+
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .slip-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+
+            border-bottom: 2px solid #2563eb;
+        }
+
+        .slip-header img {
+            width: 75px;
+            height: 75px;
+            object-fit: contain;
+        }
+
+        .slip-header h1 {
+            margin: 0;
+            color: #0d47a1;
+        }
+
+        .slip-header p {
+            margin: 5px 0 0;
+            color: #64748b;
+        }
+
+        .slip-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .details {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .details th,
+        .details td {
+            padding: 13px;
+            border: 1px solid #dbe3ec;
+            text-align: left;
+        }
+
+        .details th {
+            width: 40%;
+            background: #eff6ff;
+            color: #0d47a1;
+        }
+
+        .signature {
+            margin-top: 50px;
+            text-align: right;
+        }
+
+        .print-button {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        button {
+            padding: 11px 22px;
+            color: white;
+            background: #2563eb;
+
+            border: none;
+            border-radius: 8px;
+
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+                background: white;
+            }
+
+            .issue-slip {
+                max-width: 100%;
+                box-shadow: none;
+            }
+
+            .print-button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="issue-slip">
+
+    <div class="slip-header">
+
+        <img
+            src="{% static 'images/hospital photo/logo.png' %}"
+            alt="Hospital Logo"
+        >
+
+        <div>
+            <h1>City Care Hospital</h1>
+            <p>Medicine Issue Department</p>
+        </div>
+
+    </div>
+
+    <div class="slip-title">
+        <h2>Medicine Issue Slip</h2>
+    </div>
+
+    <table class="details">
+
+        <tr>
+            <th>Issue Number</th>
+            <td>MED{{ issue.id|stringformat:"04d" }}</td>
+        </tr>
+
+        <tr>
+            <th>Patient Name</th>
+            <td>{{ issue.patient }}</td>
+        </tr>
+
+        <tr>
+            <th>Medicine Name</th>
+            <td>{{ issue.medicine }}</td>
+        </tr>
+
+        <tr>
+            <th>Quantity</th>
+            <td>{{ issue.quantity }}</td>
+        </tr>
+
+        <tr>
+            <th>Issue Date</th>
+            <td>{{ issue.issue_date }}</td>
+        </tr>
+
+        <tr>
+            <th>Issued By</th>
+            <td>{{ issue.issued_by|default:"Admin" }}</td>
+        </tr>
+
+    </table>
+
+    <div class="signature">
+        _______________________<br>
+        Authorized Signature
+    </div>
+
+    <div class="print-button">
+        <button onclick="window.print()">
+            Print / Save PDF
+        </button>
+    </div>
+
+</div>
+
+</body>
+</html>

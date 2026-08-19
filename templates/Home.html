@@ -1,0 +1,492 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Dashboard Heading -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Dashboard</h2>
+
+            <p class="welcome-text">
+                Welcome to City Care Hospital Management System
+            </p>
+        </div>
+
+        <div id="current-date"></div>
+    </div>
+
+
+    <!-- Hospital Banner -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden">
+
+        <img
+            src="{% static 'images/hospital photo/Banner.png' %}"
+            alt="Hospital Banner"
+            class="img-fluid w-100"
+        >
+
+    </div>
+
+
+    <!-- Dashboard Cards -->
+    <div class="row g-4">
+
+        <!-- Total Doctors -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card dashboard-card shadow-sm h-100">
+
+                <div class="card-body d-flex justify-content-between align-items-center">
+
+                    <div>
+                        <p>Total Doctors</p>
+
+                        <h2>
+                            {{ doctor_count }}
+                        </h2>
+                    </div>
+
+                    <div class="dashboard-icon bg-primary-subtle text-primary">
+                        <i class="bi bi-person-badge"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Total Patients -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card dashboard-card shadow-sm h-100">
+
+                <div class="card-body d-flex justify-content-between align-items-center">
+
+                    <div>
+                        <p>Total Patients</p>
+
+                        <h2>
+                            {{ patient_count }}
+                        </h2>
+                    </div>
+
+                    <div class="dashboard-icon bg-success-subtle text-success">
+                        <i class="bi bi-people"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Total Appointments -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card dashboard-card shadow-sm h-100">
+
+                <div class="card-body d-flex justify-content-between align-items-center">
+
+                    <div>
+                        <p>Appointments</p>
+
+                        <h2>
+                            {{ appointment_count }}
+                        </h2>
+                    </div>
+
+                    <div class="dashboard-icon bg-warning-subtle text-warning">
+                        <i class="bi bi-calendar-check"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Total Income -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card dashboard-card shadow-sm h-100">
+
+                <div class="card-body d-flex justify-content-between align-items-center">
+
+                    <div>
+                        <p>Total Income</p>
+
+                        <h2>
+                            ₹{{ total_income|default:"0" }}
+                        </h2>
+                    </div>
+
+                    <div class="dashboard-icon bg-info-subtle text-info">
+                        <i class="bi bi-currency-rupee"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Charts -->
+    <div class="row g-4 mt-1">
+
+        <!-- Monthly Income Chart -->
+        <div class="col-lg-6">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold mb-3">
+                        <i class="bi bi-graph-up-arrow text-primary"></i>
+                        Monthly Income
+                    </h5>
+
+                    <div class="chart-box">
+                        <canvas id="incomeChart"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Monthly Appointment Chart -->
+        <div class="col-lg-6">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold mb-3">
+                        <i class="bi bi-bar-chart-fill text-success"></i>
+                        Monthly Appointments
+                    </h5>
+
+                    <div class="chart-box">
+                        <canvas id="appointmentChart"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Recent Appointments -->
+    <div class="card border-0 shadow-sm rounded-4 mt-4">
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <h5 class="fw-bold mb-0">
+                    <i class="bi bi-clock-history text-primary"></i>
+                    Recent Appointments
+                </h5>
+
+                <a
+                    href="{% url 'appointments' %}"
+                    class="btn btn-outline-primary btn-sm"
+                >
+                    View All
+                </a>
+
+            </div>
+
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for appointment in recent_appointments %}
+
+                        <tr>
+
+                            <td class="fw-semibold">
+                                {{ appointment.patient }}
+                            </td>
+
+                            <td>
+                                {{ appointment.doctor }}
+                            </td>
+
+                            <td>
+                                {{ appointment.appointment_date }}
+                            </td>
+
+                            <td>
+                                {{ appointment.appointment_time }}
+                            </td>
+
+                            <td>
+
+                                {% if appointment.status == "Completed" %}
+
+                                    <span class="badge bg-success">
+                                        Completed
+                                    </span>
+
+                                {% elif appointment.status == "Cancelled" %}
+
+                                    <span class="badge bg-danger">
+                                        Cancelled
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-warning text-dark">
+                                        Pending
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                class="text-center text-muted py-4"
+                            >
+                                No recent appointments found.
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Current Date
+    const currentDate = document.getElementById("current-date");
+
+    if (currentDate) {
+        currentDate.innerText = new Date().toLocaleDateString(
+            "en-IN",
+            {
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            }
+        );
+    }
+
+
+    // Django values को JavaScript numbers में बदलना
+    const totalIncome = Number(
+        "{{ total_income|default:'0' }}"
+    );
+
+    const totalAppointments = Number(
+        "{{ appointment_count|default:'0' }}"
+    );
+
+
+    // Monthly Income Chart
+    const incomeCanvas =
+        document.getElementById("incomeChart");
+
+    if (incomeCanvas && typeof Chart !== "undefined") {
+
+        new Chart(incomeCanvas, {
+
+            type: "line",
+
+            data: {
+
+                labels: [
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun"
+                ],
+
+                datasets: [{
+
+                    label: "Income ₹",
+
+                    data: [
+                        1000,
+                        1800,
+                        2200,
+                        2900,
+                        3400,
+                        totalIncome
+                    ],
+
+                    borderColor: "#2563eb",
+
+                    backgroundColor:
+                        "rgba(37, 99, 235, 0.15)",
+
+                    borderWidth: 3,
+
+                    tension: 0.4,
+
+                    fill: true,
+
+                    pointRadius: 4
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                scales: {
+
+                    y: {
+                        beginAtZero: true
+                    }
+
+                }
+
+            }
+
+        });
+
+    }
+
+
+    // Monthly Appointment Chart
+    const appointmentCanvas =
+        document.getElementById("appointmentChart");
+
+    if (
+        appointmentCanvas &&
+        typeof Chart !== "undefined"
+    ) {
+
+        new Chart(appointmentCanvas, {
+
+            type: "bar",
+
+            data: {
+
+                labels: [
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun"
+                ],
+
+                datasets: [{
+
+                    label: "Appointments",
+
+                    data: [
+                        3,
+                        5,
+                        8,
+                        6,
+                        9,
+                        totalAppointments
+                    ],
+
+                    backgroundColor: [
+                        "#2563eb",
+                        "#16a34a",
+                        "#f59e0b",
+                        "#8b5cf6",
+                        "#ef4444",
+                        "#06b6d4"
+                    ],
+
+                    borderRadius: 8
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                scales: {
+
+                    y: {
+                        beginAtZero: true
+                    }
+
+                }
+
+            }
+
+        });
+
+    }
+
+});
+</script>
+
+{% endblock %}

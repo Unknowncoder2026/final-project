@@ -1,0 +1,30 @@
+#header {
+    background: linear-gradient(135deg, #123c9d, #0ea5e9) !important;
+    min-height: 85px !important;
+    padding: 12px 25px !important;
+}
+
+.hospital-admin-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.hospital-admin-brand img {
+    width: 58px;
+    height: 58px;
+    background: white;
+    border-radius: 50%;
+    padding: 4px;
+}
+
+.hospital-admin-brand h1 {
+    margin: 0;
+    color: white;
+    font-size: 24px;
+}
+
+.hospital-admin-brand p {
+    margin: 4px 0 0;
+    color: #dbeafe;
+}

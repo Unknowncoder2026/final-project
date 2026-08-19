@@ -1,0 +1,1886 @@
+/* =========================================
+   GENERAL
+========================================= */
+
+:root {
+    --primary: #2355c4;
+    --primary-dark: #123c9d;
+    --background: #f5f7fb;
+    --text-dark: #172033;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--background);
+    color: var(--text-dark);
+    font-family: Arial, sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+
+    width: 250px;
+    height: 100vh;
+    padding: 20px 15px;
+    overflow-y: auto;
+
+    color: white;
+    background: linear-gradient(
+        180deg,
+        var(--primary),
+        var(--primary-dark)
+    );
+}
+
+.sidebar-brand {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.sidebar-brand img {
+    width: 75px;
+    height: 75px;
+    padding: 4px;
+    margin-bottom: 10px;
+
+    object-fit: contain;
+    background: white;
+    border-radius: 50%;
+}
+
+.sidebar-brand h4 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.sidebar-brand small {
+    display: block;
+    margin-top: 4px;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px 14px;
+
+    color: white;
+    border-radius: 11px;
+
+    transition: 0.25s ease;
+}
+
+.sidebar-menu a i {
+    width: 24px;
+    font-size: 19px;
+    text-align: center;
+}
+
+.sidebar-menu a:hover {
+    color: white;
+    transform: translateX(7px);
+}
+
+/* Different hover colors */
+
+.sidebar-menu a:nth-child(1):hover {
+    background: #e0116a;
+}
+
+.sidebar-menu a:nth-child(2):hover {
+    background: #16a34a;
+}
+
+.sidebar-menu a:nth-child(3):hover {
+    background: #f59e0b;
+}
+
+.sidebar-menu a:nth-child(4):hover {
+    background: #8b5cf6;
+}
+
+.sidebar-menu a:nth-child(5):hover {
+    background: #ef4444;
+}
+
+.sidebar-menu a:nth-child(6):hover {
+    background: #06b6d4;
+}
+
+.sidebar-menu a:nth-child(7):hover {
+    background: #0f9f8f;
+}
+
+.sidebar-menu a:nth-child(8):hover {
+    background: #3f51b5;
+}
+
+.sidebar-menu a:nth-child(9):hover {
+    background: #475569;
+}
+
+.sidebar-menu a.active {
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.18);
+}
+
+.sidebar-menu .logout-link {
+    margin-top: 12px;
+    background: rgba(220, 53, 69, 0.18);
+}
+
+.sidebar-menu .logout-link:hover {
+    background: #dc3545;
+}
+
+
+/* =========================================
+   MAIN WRAPPER / TOPBAR
+========================================= */
+
+.main-wrapper {
+    min-height: 100vh;
+    margin-left: 250px;
+}
+
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 900;
+
+    height: 70px;
+    padding: 0 28px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: white;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.07);
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.icon-button {
+    width: 40px;
+    height: 40px;
+
+    border: none;
+    border-radius: 10px;
+
+    color: var(--primary);
+    background: #eef3ff;
+
+    transition: 0.25s;
+}
+
+.icon-button:hover {
+    color: white;
+    background: var(--primary);
+}
+
+.admin-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #334155;
+    font-weight: 600;
+}
+
+.admin-box i {
+    font-size: 24px;
+}
+
+.page-content {
+    padding: 28px;
+}
+
+
+/* =========================================
+   DASHBOARD
+========================================= */
+
+.welcome-text {
+    margin: 0;
+    color: #e0116a;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+/* केवल current date को button जैसा बनाएगा */
+#current-date {
+    display: inline-block;
+
+    padding: 9px 17px;
+
+    color: white !important;
+    background: linear-gradient(135deg, #e0116a, #ff5c9d);
+
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 700;
+
+    box-shadow: 0 6px 16px rgba(224, 17, 106, 0.24);
+}
+
+.dashboard-card {
+    min-height: 120px;
+
+    border: none;
+    border-radius: 18px;
+
+    transition: 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12) !important;
+}
+
+.dashboard-card p {
+    margin-bottom: 5px;
+    color: var(--text-muted);
+    font-size: 15px;
+}
+
+.dashboard-card h2 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.dashboard-icon {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+    font-size: 23px;
+    flex-shrink: 0;
+}
+
+.chart-box {
+    position: relative;
+    width: 100%;
+    height: 290px;
+}
+
+.ratio-chart-box {
+    position: relative;
+    width: 100%;
+    height: 280px;
+}
+
+
+/* =========================================
+   BANNER
+========================================= */
+
+.dashboard-banner,
+.hospital-banner {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 18px;
+}
+
+.dashboard-banner img,
+.banner-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 18px;
+}
+
+
+/* =========================================
+   CARDS
+========================================= */
+
+.card {
+    border: none;
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1) !important;
+}
+
+.card-header {
+    border: none;
+}
+
+.card-body {
+    font-size: 15px;
+}
+
+
+/* =========================================
+   TABLES
+========================================= */
+
+.table {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.table thead th {
+    padding: 14px;
+    white-space: nowrap;
+
+    color: #334155;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.table tbody td {
+    padding: 14px;
+    vertical-align: middle;
+    border-color: #edf1f7;
+}
+
+.table tbody tr:hover {
+    background: #f8fbff;
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.btn {
+    border-radius: 9px;
+    font-weight: 600;
+}
+
+.btn-sm {
+    margin: 2px;
+}
+
+
+/* =========================================
+   FORM COMMON DESIGN
+========================================= */
+
+.doctor-form p,
+.patient-form p,
+.appointment-form p,
+.bill-form p,
+.medicine-form p {
+    margin-bottom: 18px;
+}
+
+.doctor-form label,
+.patient-form label,
+.appointment-form label,
+.bill-form label,
+.medicine-form label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #334155;
+    font-weight: 600;
+}
+
+.doctor-form input,
+.doctor-form select,
+.doctor-form textarea,
+
+.patient-form input,
+.patient-form select,
+.patient-form textarea,
+
+.appointment-form input,
+.appointment-form select,
+.appointment-form textarea,
+
+.bill-form input,
+.bill-form select,
+.bill-form textarea,
+
+.medicine-form input,
+.medicine-form select,
+.medicine-form textarea {
+    width: 100%;
+    padding: 11px 13px;
+
+    border: 1px solid #d7deea;
+    border-radius: 10px;
+
+    background: #f8fafc;
+    outline: none;
+
+    transition: 0.25s ease;
+}
+
+.doctor-form input:focus,
+.doctor-form select:focus,
+.doctor-form textarea:focus,
+
+.patient-form input:focus,
+.patient-form select:focus,
+.patient-form textarea:focus,
+
+.appointment-form input:focus,
+.appointment-form select:focus,
+.appointment-form textarea:focus,
+
+.bill-form input:focus,
+.bill-form select:focus,
+.bill-form textarea:focus,
+
+.medicine-form input:focus,
+.medicine-form select:focus,
+.medicine-form textarea:focus {
+    border-color: var(--primary);
+    background: white;
+
+    box-shadow: 0 0 0 4px rgba(35, 85, 196, 0.12);
+}
+
+.doctor-form textarea,
+.patient-form textarea,
+.appointment-form textarea,
+.bill-form textarea,
+.medicine-form textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.errorlist {
+    margin: 0 0 8px;
+    padding-left: 18px;
+    color: #dc3545;
+}
+
+
+/* =========================================
+   DELETE CONFIRMATION
+========================================= */
+
+.delete-info-box {
+    padding: 10px 20px;
+
+    text-align: left;
+
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+}
+
+.delete-info-box p {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 0;
+    padding: 14px 0;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.delete-info-box p:last-child {
+    border-bottom: none;
+}
+
+.delete-info-box span {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.delete-info-box strong {
+    color: var(--text-dark);
+}
+
+
+/* =========================================
+   PRINT
+========================================= */
+
+.print-heading {
+    display: none;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.print-logo {
+    display: block;
+
+    width: 75px;
+    height: 75px;
+
+    margin: 0 auto 8px;
+
+    object-fit: contain;
+}
+
+
+/* =========================================
+   LOGIN PAGE
+========================================= */
+
+.login-body {
+    margin: 0;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(13, 110, 253, 0.94),
+            rgba(0, 188, 212, 0.9)
+        );
+
+    font-family: Arial, sans-serif;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 390px;
+
+    padding: 35px;
+
+    text-align: center;
+
+    background: white;
+    border-radius: 20px;
+
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+}
+
+.login-logo {
+    width: 90px;
+    height: 90px;
+
+    margin-bottom: 10px;
+
+    object-fit: contain;
+}
+
+.login-box h2 {
+    margin: 5px 0;
+    color: #0d47a1;
+}
+
+.login-subtitle {
+    margin-bottom: 22px;
+    color: var(--text-muted);
+}
+
+.input-group {
+    display: block;
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+
+    color: #334155;
+    font-weight: 600;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(35, 85, 196, 0.12);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+
+    color: white;
+    background: var(--primary);
+
+    border: none;
+    border-radius: 9px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background: var(--primary-dark);
+}
+
+.login-error {
+    padding: 10px;
+    margin-bottom: 15px;
+
+    color: #b91c1c;
+    background: #fee2e2;
+
+    border-radius: 8px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 992px) {
+    .sidebar {
+        width: 220px;
+    }
+
+    .main-wrapper {
+        margin-left: 220px;
+    }
+
+    .page-content {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: relative;
+
+        width: 100%;
+        height: auto;
+        max-height: none;
+    }
+
+    .sidebar-menu {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sidebar-menu a {
+        margin: 0;
+    }
+
+    .main-wrapper {
+        margin-left: 0;
+    }
+
+    .topbar {
+        height: auto;
+        min-height: 65px;
+        padding: 12px 15px;
+    }
+
+    .page-content {
+        padding: 15px;
+    }
+
+    .chart-box,
+    .ratio-chart-box {
+        height: 235px;
+    }
+
+    .table-responsive .table {
+        min-width: 760px;
+    }
+
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar-menu {
+        grid-template-columns: 1fr;
+    }
+
+    .login-box {
+        padding: 25px 20px;
+    }
+
+    .topbar h5 {
+        font-size: 15px;
+    }
+
+    .admin-box span {
+        display: none;
+    }
+}
+
+
+/* =========================================
+   PRINT MODE
+========================================= */
+
+@media print {
+    .sidebar,
+    .topbar,
+    .no-print {
+        display: none !important;
+    }
+
+    .main-wrapper {
+        margin-left: 0 !important;
+    }
+
+    .page-content {
+        padding: 0 !important;
+    }
+
+    .print-heading {
+        display: block !important;
+    }
+
+    .print-logo {
+        display: block !important;
+    }
+
+    .card {
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    body {
+        background: white !important;
+    }
+
+    table {
+        width: 100%;
+    }
+    .report-small-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 18px;
+
+    background: #eff6ff;
+    border-radius: 14px;
+    border-left: 5px solid #2563eb;
+}
+
+.report-small-card span {
+    color: #64748b;
+    font-weight: 600;
+}
+
+.report-small-card strong {
+    color: #1e293b;
+    font-size: 25px;
+}
+
+.report-pending {
+    background: #fffbeb;
+    border-left-color: #f59e0b;
+}
+
+.report-completed {
+    background: #ecfdf5;
+    border-left-color: #16a34a;
+}
+
+.report-cancelled {
+    background: #fef2f2;
+    border-left-color: #dc3545;
+}
+/* =========================================
+   REPORTS PAGE SCREEN DESIGN
+========================================= */
+
+.reports-page {
+    width: 100%;
+}
+
+.reports-page .card {
+    page-break-inside: avoid;
+}
+
+.reports-page .dashboard-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 21px;
+}
+
+.reports-page .report-small-card {
+    min-height: 75px;
+}
+
+
+/* =========================================
+   REPORT PRINT DESIGN
+========================================= */
+
+@media print {
+
+    @page {
+        size: A4 landscape;
+        margin: 10mm;
+    }
+
+    html,
+    body {
+        width: 100%;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        font-size: 11px !important;
+    }
+
+    .sidebar,
+    .topbar,
+    .no-print {
+        display: none !important;
+    }
+
+    .main-wrapper {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .page-content {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .reports-page {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    .reports-page .container,
+    .reports-page .container-fluid {
+        width: 100% !important;
+        max-width: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Screen heading hide */
+    .reports-page > .d-flex:first-child {
+        display: none !important;
+    }
+
+    /* Print heading */
+    .reports-page .print-heading {
+        display: block !important;
+        text-align: center;
+        margin: 0 0 12px !important;
+    }
+
+    .reports-page .print-heading h2 {
+        font-size: 22px !important;
+        margin: 0 0 4px !important;
+    }
+
+    .reports-page .print-heading h4 {
+        font-size: 15px !important;
+        margin: 0 0 4px !important;
+    }
+
+    .reports-page .row {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        margin: 0 -4px 10px !important;
+    }
+
+    /* Main four cards in one line */
+    .reports-page .col-xl-3,
+    .reports-page .col-md-6 {
+        width: 25% !important;
+        flex: 0 0 25% !important;
+        padding: 4px !important;
+    }
+
+    /* Pharmacy and Laboratory side by side */
+    .reports-page .col-lg-6 {
+        width: 50% !important;
+        flex: 0 0 50% !important;
+        padding: 4px !important;
+    }
+
+    /* Appointment small cards */
+    .reports-page .col-md-3 {
+        width: 25% !important;
+        flex: 0 0 25% !important;
+        padding: 4px !important;
+    }
+
+    .reports-page .card {
+        margin-bottom: 8px !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 5px !important;
+        box-shadow: none !important;
+        page-break-inside: avoid !important;
+    }
+
+    .reports-page .card-body {
+        padding: 9px !important;
+    }
+
+    .reports-page .dashboard-icon {
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 16px !important;
+        border: 1px solid #cbd5e1;
+    }
+
+    .reports-page h3 {
+        font-size: 18px !important;
+        margin: 2px 0 0 !important;
+    }
+
+    .reports-page h5 {
+        font-size: 13px !important;
+        margin-bottom: 7px !important;
+    }
+
+    .reports-page p {
+        margin-bottom: 2px !important;
+    }
+
+    .reports-page .report-small-card {
+        min-height: auto !important;
+        padding: 8px !important;
+        border-radius: 4px !important;
+    }
+
+    .reports-page .report-small-card strong {
+        font-size: 17px !important;
+    }
+
+    .reports-page table {
+        width: 100% !important;
+        font-size: 10px !important;
+        border-collapse: collapse !important;
+    }
+
+    .reports-page th,
+    .reports-page td {
+        padding: 5px 6px !important;
+        border: 1px solid #cbd5e1 !important;
+    }
+
+    .reports-page .table-responsive {
+        overflow: visible !important;
+    }
+
+    .reports-page tr {
+        page-break-inside: avoid !important;
+    }
+
+    .reports-page .mb-4 {
+        margin-bottom: 8px !important;
+    }
+
+    .reports-page .g-3,
+    .reports-page .g-4 {
+        --bs-gutter-x: 8px !important;
+        --bs-gutter-y: 8px !important;
+    }
+}
+.print-logo{
+    width:80px;
+    height:80px;
+    object-fit:contain;
+    display:block;
+    margin:0 auto 10px;
+}
+
+@media print{
+
+.print-logo{
+    display:block !important;
+    width:80px;
+    height:80px;
+    margin:0 auto 10px;
+}
+
+}
+@media print {
+
+    @page {
+        size: A4 landscape;
+        margin: 8mm;
+    }
+
+    .reports-page .row {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 8px !important;
+        width: 100% !important;
+        margin: 0 0 10px !important;
+    }
+
+    .reports-page .col-xl-3,
+    .reports-page .col-md-6,
+    .reports-page .col-md-3 {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: none !important;
+        padding: 0 !important;
+    }
+
+    .reports-page .row:has(.col-lg-6) {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .reports-page .col-lg-6 {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: none !important;
+        padding: 0 !important;
+    }
+
+    .reports-page .card {
+        width: 100% !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: 1px solid #cbd5e1 !important;
+        page-break-inside: avoid !important;
+    }
+
+    .reports-page .card-body {
+        padding: 8px !important;
+    }
+
+    .reports-page .dashboard-icon {
+        width: 30px !important;
+        height: 30px !important;
+        font-size: 14px !important;
+    }
+
+    .reports-page h3 {
+        font-size: 16px !important;
+    }
+
+    .reports-page p {
+        font-size: 10px !important;
+    }
+
+    .reports-page .print-logo {
+        width: 55px !important;
+        height: 55px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .reports-page .print-heading {
+        margin-bottom: 8px !important;
+    }
+
+    .reports-page table {
+        font-size: 9px !important;
+    }
+
+    .reports-page th,
+    .reports-page td {
+        padding: 4px !important;
+    }
+}
+/* Print के बाहर hide रहेगा */
+.report-print-layout {
+    display: none;
+}
+
+@media print {
+
+    @page {
+        size: A4 landscape;
+        margin: 10mm;
+    }
+
+    /* Screen वाला पूरा report hide */
+    .reports-page > * {
+        display: none !important;
+    }
+
+    /* केवल नया compact report show */
+    .reports-page .report-print-layout {
+        display: block !important;
+    }
+
+    .report-print-layout {
+        width: 100%;
+        color: #111;
+        font-family: Arial, sans-serif;
+        font-size: 11px;
+    }
+
+    .print-report-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        text-align: left;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #2563eb;
+    }
+
+    .print-report-header img {
+        width: 60px;
+        height: 60px;
+        object-fit: contain;
+    }
+
+    .print-report-header h2 {
+        margin: 0;
+        font-size: 22px;
+        color: #164e9b;
+    }
+
+    .print-report-header p {
+        margin: 3px 0;
+        font-size: 13px;
+    }
+
+    .report-print-layout h3 {
+        margin: 14px 0 6px;
+        padding-bottom: 4px;
+        font-size: 14px;
+        border-bottom: 1px solid #9ca3af;
+    }
+
+    .print-summary-table,
+    .print-details-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10px;
+    }
+
+    .print-summary-table th,
+    .print-summary-table td,
+    .print-details-table th,
+    .print-details-table td {
+        padding: 7px;
+        border: 1px solid #9ca3af;
+        text-align: center;
+    }
+
+    .print-summary-table th,
+    .print-details-table th {
+        background: #eaf2ff !important;
+        font-weight: 700;
+    }
+
+    .print-summary-table td {
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .print-two-column {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .print-two-column .print-details-table th {
+        text-align: left;
+    }
+
+    .print-two-column .print-details-table td {
+        text-align: right;
+    }
+
+    .report-print-layout table,
+    .report-print-layout tr {
+        page-break-inside: avoid;
+    }
+
+    /* =====================================================
+   PATIENT NEW APPOINTMENT
+===================================================== */
+
+.appointment-page {
+    padding: 25px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.appointment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.appointment-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #172554;
+    margin-bottom: 5px;
+}
+
+.appointment-header p {
+    color: #64748b;
+    margin: 0;
+}
+
+.back-btn {
+    text-decoration: none;
+    background: #eef2ff;
+    color: #3730a3;
+    padding: 11px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.appointment-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 35px rgba(15, 23, 42, 0.08);
+}
+
+.appointment-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.info-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px;
+    background: #f8fafc;
+    border-radius: 14px;
+}
+
+.info-box i {
+    font-size: 28px;
+    color: #2563eb;
+}
+
+.info-box strong {
+    display: block;
+    color: #172554;
+}
+
+.info-box span {
+    display: block;
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+.form-section {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.form-section h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #172554;
+    margin-bottom: 20px;
+}
+
+.form-section h4 i {
+    color: #2563eb;
+    margin-right: 8px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 8px;
+}
+
+.form-group select,
+.form-group input,
+.form-section textarea {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    outline: none;
+    background: #ffffff;
+    transition: 0.2s;
+}
+
+.form-group select:focus,
+.form-group input:focus,
+.form-section textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+.availability-box {
+    margin-top: 20px;
+    min-height: 105px;
+    border-radius: 14px;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.availability-placeholder {
+    text-align: center;
+    color: #64748b;
+}
+
+.availability-placeholder i {
+    font-size: 35px;
+    color: #94a3b8;
+}
+
+.availability-placeholder h5 {
+    margin: 8px 0 4px;
+    color: #334155;
+}
+
+.availability-placeholder p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.checking {
+    text-align: center;
+    color: #2563eb;
+}
+
+.checking .spinner-border {
+    margin-bottom: 10px;
+}
+
+.available,
+.not-available {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.available {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+.available > i {
+    font-size: 30px;
+}
+
+.available strong,
+.not-available strong {
+    display: block;
+    font-size: 16px;
+}
+
+.available span,
+.not-available span {
+    display: block;
+    margin-top: 4px;
+    font-size: 14px;
+}
+
+.not-available {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.not-available > i {
+    font-size: 30px;
+}
+
+.appointment-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.cancel-btn {
+    padding: 12px 22px;
+    border-radius: 10px;
+    text-decoration: none;
+    background: #f1f5f9;
+    color: #475569;
+    font-weight: 600;
+}
+
+.book-btn {
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.book-btn:hover:not(:disabled) {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.book-btn:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+
+    .appointment-page {
+        padding: 15px;
+    }
+
+    .appointment-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .appointment-info {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .appointment-card {
+        padding: 20px;
+    }
+
+    .appointment-footer {
+        flex-direction: column;
+    }
+
+    .cancel-btn,
+    .book-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .doctor-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: #eef4ff;
+    color: #2563eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.card {
+    border-radius: 18px;
+}
+
+.table thead th {
+    color: #64748b;
+    font-size: 14px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table tbody td {
+    padding-top: 18px;
+    padding-bottom: 18px;
+}
+}
+}
+
+/* =====================================================
+   COMMON RESET
+===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    background: #f5f7fb;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 260px;
+    height: 100vh;
+
+    background: linear-gradient(
+        180deg,
+        #0d6efd 0%,
+        #084298 100%
+    );
+
+    color: white;
+    z-index: 1000;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: auto;
+}
+
+
+/* =====================================================
+   SIDEBAR BRAND
+===================================================== */
+
+.sidebar-brand {
+    text-align: center;
+    padding: 25px 15px 22px;
+}
+
+.sidebar-brand img {
+    width: 82px;
+    height: 82px;
+
+    object-fit: contain;
+
+    background: white;
+    border-radius: 50%;
+
+    padding: 7px;
+
+    margin-bottom: 12px;
+}
+
+.sidebar-brand h4 {
+    font-size: 19px;
+    margin: 0 0 5px;
+}
+
+.sidebar-brand small {
+    opacity: 0.8;
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   SIDEBAR MENU
+===================================================== */
+
+.sidebar-menu {
+    padding: 10px 14px 25px;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    width: 100%;
+
+    padding: 13px 15px;
+
+    margin-bottom: 6px;
+
+    border-radius: 11px;
+
+    color: rgba(255,255,255,0.9);
+
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.sidebar-menu a i {
+    width: 23px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.sidebar-menu a b {
+    font-size: 14px;
+}
+
+.sidebar-menu a:hover {
+    background: rgba(255,255,255,0.13);
+    color: white;
+}
+
+.sidebar-menu a.active {
+    background: white;
+    color: #0d6efd;
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,0.12);
+}
+
+
+/* =====================================================
+   MAIN WRAPPER
+===================================================== */
+
+.main-wrapper {
+    margin-left: 260px;
+
+    min-height: 100vh;
+
+    width: calc(100% - 260px);
+
+    background: #f5f7fb;
+}
+
+
+/* =====================================================
+   TOPBAR
+===================================================== */
+
+.topbar {
+    height: 72px;
+
+    background: white;
+
+    border-bottom: 1px solid #e9edf3;
+
+    padding: 0 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 900;
+}
+
+.topbar h5 {
+    color: #222;
+    font-size: 17px;
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.icon-button {
+    width: 40px;
+    height: 40px;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: #f1f5fb;
+
+    color: #555;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-box {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    font-weight: 600;
+    color: #333;
+}
+
+
+/* =====================================================
+   PAGE CONTENT
+===================================================== */
+
+.page-content {
+    width: 100%;
+    min-height: calc(100vh - 72px);
+
+    padding: 28px;
+}
+
+
+/* =====================================================
+   PATIENT PANEL
+===================================================== */
+
+.patient-layout .page-content {
+    padding: 30px;
+}
+
+.patient-layout .main-wrapper {
+    background: #f6f8fc;
+}
+
+
+/* =====================================================
+   PATIENT CARDS
+===================================================== */
+
+.patient-layout .card {
+    border: 0;
+    border-radius: 17px;
+
+    box-shadow:
+        0 5px 22px rgba(0,0,0,0.06);
+}
+
+
+/* =====================================================
+   PATIENT TABLE
+===================================================== */
+
+.patient-layout .table {
+    margin-bottom: 0;
+}
+
+.patient-layout .table thead th {
+    background: #f5f7fb;
+    color: #5c6675;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    padding: 16px;
+
+    border: 0;
+}
+
+.patient-layout .table tbody td {
+    padding: 16px;
+    vertical-align: middle;
+
+    border-color: #edf0f4;
+}
+
+
+/* =====================================================
+   PATIENT RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .sidebar {
+        width: 230px;
+    }
+
+    .main-wrapper {
+        margin-left: 230px;
+        width: calc(100% - 230px);
+    }
+
+    .page-content {
+        padding: 20px;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .sidebar {
+        position: relative;
+
+        width: 100%;
+        height: auto;
+    }
+
+    .main-wrapper {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .topbar {
+        position: relative;
+
+        height: auto;
+
+        min-height: 65px;
+
+        padding: 12px 18px;
+    }
+
+    .page-content {
+        padding: 15px;
+    }
+
+    .sidebar-menu {
+        padding-bottom: 15px;
+    }
+
+}
+}

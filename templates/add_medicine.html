@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Medicine{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+
+        <div class="card border-0 shadow-sm rounded-4">
+
+            <div class="card-header bg-info text-dark py-3">
+                <h3 class="mb-0">
+                    <i class="bi bi-capsule"></i>
+                    Add New Medicine
+                </h3>
+            </div>
+
+            <div class="card-body p-4">
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="medicine-form">
+                        {{ form.as_p }}
+                    </div>
+
+                    <div class="mt-4">
+
+                        <button type="submit" class="btn btn-info px-4">
+                            Save Medicine
+                        </button>
+
+                        <a href="{% url 'medicines' %}" class="btn btn-secondary">
+                            Back
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

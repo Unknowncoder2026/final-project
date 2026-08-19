@@ -1,0 +1,273 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin Panel
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+        <h2 class="fw-bold mb-1">
+            <i class="bi bi-shield-lock-fill text-primary"></i>
+            Admin Panel
+        </h2>
+
+        <p class="text-muted mb-0">
+            Manage all hospital modules from one place
+        </p>
+    </div>
+<a href="{% url 'admin_panel' %}" class="btn btn-dark rounded-pill px-4">
+    <i class="bi bi-person-gear"></i>
+    Admin Control Panel
+</a>
+</div>
+
+
+<div class="row g-3 mb-4">
+
+    <div class="col-xl-3 col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-muted mb-1">Doctors</p>
+                    <h3 class="fw-bold mb-0">{{ doctor_count }}</h3>
+                </div>
+
+                <div class="dashboard-icon bg-primary-subtle text-primary">
+                    <i class="bi bi-person-badge"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-muted mb-1">Patients</p>
+                    <h3 class="fw-bold mb-0">{{ patient_count }}</h3>
+                </div>
+
+                <div class="dashboard-icon bg-success-subtle text-success">
+                    <i class="bi bi-people"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-muted mb-1">Appointments</p>
+                    <h3 class="fw-bold mb-0">{{ appointment_count }}</h3>
+                </div>
+
+                <div class="dashboard-icon bg-warning-subtle text-warning">
+                    <i class="bi bi-calendar-check"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-muted mb-1">Total Income</p>
+                    <h3 class="fw-bold mb-0">₹{{ total_income }}</h3>
+                </div>
+
+                <div class="dashboard-icon bg-info-subtle text-info">
+                    <i class="bi bi-currency-rupee"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="row g-4 mb-4">
+
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body">
+
+                <h5 class="fw-bold mb-3">
+                    <i class="bi bi-lightning-charge-fill text-warning"></i>
+                    Quick Actions
+                    <a
+    href="{% url 'account_approval_list' %}"
+    class="btn btn-outline-danger"
+>
+    <i class="bi bi-person-check-fill"></i>
+    Account Approvals
+</a>
+                </h5>
+
+                <div class="d-grid gap-2">
+
+                    <a href="{% url 'add_doctor' %}" class="btn btn-outline-primary">
+                        Add Doctor
+                    </a>
+
+                    <a href="{% url 'add_patient' %}" class="btn btn-outline-success">
+                        Add Patient
+                    </a>
+
+                    <a href="{% url 'add_appointment' %}" class="btn btn-outline-warning">
+                        Add Appointment
+                    </a>
+
+                    <a href="{% url 'add_bill' %}" class="btn btn-outline-danger">
+                        Create Bill
+                    </a>
+
+                    <a href="{% url 'add_medicine' %}" class="btn btn-outline-info">
+                        Add Medicine
+                    </a>
+
+                    <a href="{% url 'add_test' %}" class="btn btn-outline-dark">
+                        Add Laboratory Test
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body">
+
+                <h5 class="fw-bold mb-3">
+                    Module Overview
+                </h5>
+
+                <div class="table-responsive">
+
+                    <table class="table align-middle">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th>Module</th>
+                                <th>Total Records</th>
+                                <th>Open</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>Billing</td>
+                                <td>{{ bill_count }}</td>
+                                <td>
+                                    <a href="{% url 'billing_list' %}" class="btn btn-sm btn-primary">
+                                        View
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Pharmacy</td>
+                                <td>{{ medicine_count }}</td>
+                                <td>
+                                    <a href="{% url 'medicines' %}" class="btn btn-sm btn-info">
+                                        View
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Laboratory</td>
+                                <td>{{ laboratory_count }}</td>
+                                <td>
+                                    <a href="{% url 'laboratory' %}" class="btn btn-sm btn-success">
+                                        View
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Reports</td>
+                                <td>All Modules</td>
+                                <td>
+                                    <a href="{% url 'reports' %}" class="btn btn-sm btn-dark">
+                                        View
+                                    </a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="card border-0 shadow-sm rounded-4">
+
+    <div class="card-body">
+
+        <h5 class="fw-bold mb-3">
+            Recent Appointments
+        </h5>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-primary">
+                    <tr>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for appointment in recent_appointments %}
+
+                    <tr>
+                        <td>{{ appointment.patient }}</td>
+                        <td>{{ appointment.doctor }}</td>
+                        <td>{{ appointment.appointment_date }}</td>
+                        <td>{{ appointment.appointment_time }}</td>
+                        <td>{{ appointment.status }}</td>
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="5" class="text-center py-4">
+                            No recent appointments found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

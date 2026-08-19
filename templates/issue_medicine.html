@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Issue Medicine
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-7 col-md-9">
+
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
+            <div class="card-header bg-primary text-white py-3">
+
+                <h3 class="mb-0">
+                    <i class="bi bi-capsule-pill"></i>
+                    Issue Medicine
+                </h3>
+
+            </div>
+
+            <div class="card-body p-4">
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+
+                    {% endif %}
+
+                    <div class="medicine-form">
+                        {{ form.as_p }}
+                    </div>
+
+                    <div class="mt-4">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary px-4"
+                        >
+                            <i class="bi bi-check-circle"></i>
+                            Issue Medicine
+                        </button>
+
+                        <a
+                            href="{% url 'medicines' %}"
+                            class="btn btn-secondary px-4"
+                        >
+                            <i class="bi bi-arrow-left"></i>
+                            Back
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

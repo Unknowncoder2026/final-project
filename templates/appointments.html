@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}Appointments{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1">Appointments</h2>
+        <p class="text-muted mb-0">Manage patient appointments</p>
+    </div>
+
+    <a href="{% url 'add_appointment' %}" class="btn btn-primary">
+        <i class="bi bi-calendar-plus"></i>
+        Add Appointment
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-body">
+
+        <form method="GET" class="row g-2">
+
+            <div class="col-md-8">
+                <input
+                    type="text"
+                    name="search"
+                    class="form-control"
+                    placeholder="Search by patient name"
+                    value="{{ request.GET.search }}"
+                >
+            </div>
+
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-dark">
+                    <i class="bi bi-search"></i>
+                    Search
+                </button>
+
+                <a href="{% url 'appointments' %}" class="btn btn-secondary">
+                    Show All
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body">
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+
+                <thead class="table-warning">
+                    <tr>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Symptoms</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for appointment in appointments %}
+
+                    <tr>
+                        <td class="fw-semibold">
+                            {{ appointment.patient }}
+                        </td>
+
+                        <td>
+                            {{ appointment.doctor }}
+                        </td>
+
+                        <td>
+                            {{ appointment.appointment_date }}
+                        </td>
+
+                        <td>
+                            {{ appointment.appointment_time }}
+                        </td>
+
+                        <td>
+                            {{ appointment.symptoms|default:"Not provided" }}
+                        </td>
+
+                        <td>
+                            {% if appointment.status == "Completed" %}
+                                <span class="badge bg-success">
+                                    Completed
+                                </span>
+
+                            {% elif appointment.status == "Cancelled" %}
+                                <span class="badge bg-danger">
+                                    Cancelled
+                                </span>
+
+                            {% else %}
+                                <span class="badge bg-warning text-dark">
+                                    Pending
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <a
+                                href="{% url 'edit_appointment' appointment.id %}"
+                                class="btn btn-warning btn-sm"
+                            >
+                                <i class="bi bi-pencil-square"></i>
+                                Edit
+                            </a>
+
+                            <a
+                                href="{% url 'delete_appointment' appointment.id %}"
+                                class="btn btn-danger btn-sm"
+                            >
+                                <i class="bi bi-trash"></i>
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-4">
+                            No appointments found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

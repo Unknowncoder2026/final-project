@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Book Appointment | City Care Hospital{% endblock %}
+
+{% block content %}
+<style>
+    .booking-hero { background: linear-gradient(135deg,#0d6efd,#084298); color:#fff; border-radius:20px; padding:30px; }
+    .booking-card { border:0; border-radius:18px; box-shadow:0 8px 30px rgba(0,0,0,.08); }
+    .doctor-card { border:1px solid #e9eef7; border-radius:16px; padding:18px; transition:.2s; cursor:pointer; height:100%; }
+    .doctor-card:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(13,110,253,.12); }
+    .doctor-card.selected { border:2px solid #0d6efd; background:#f5f9ff; }
+    .doctor-photo { width:72px; height:72px; border-radius:50%; object-fit:cover; background:#e8f1ff; }
+    .doctor-fallback { width:72px; height:72px; border-radius:50%; background:#e8f1ff; color:#0d6efd; display:flex; align-items:center; justify-content:center; font-size:30px; }
+    .slot { border:1px solid #dfe6f2; border-radius:10px; padding:10px 12px; background:#fff; cursor:pointer; text-align:center; }
+    .slot:hover { border-color:#0d6efd; }
+    .slot.booked { background:#f8d7da; color:#842029; text-decoration:line-through; cursor:not-allowed; opacity:.75; }
+    .slot input { display:none; }
+    .slot:has(input:checked) { background:#0d6efd; color:#fff; border-color:#0d6efd; }
+    .info-panel { background:#f7f9fc; border-radius:14px; }
+</style>
+
+<div class="container-fluid py-4">
+    <div class="booking-hero mb-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h2 class="fw-bold mb-2"><i class="bi bi-calendar-plus me-2"></i>Book New Appointment</h2>
+                <p class="mb-0 opacity-75">Choose a doctor, date and an available time slot.</p>
+            </div>
+            <a href="{% url 'patient_appointments' %}" class="btn btn-light">
+                <i class="bi bi-calendar-check me-1"></i> My Appointments
+            </a>
+        </div>
+    </div>
+
+    <div class="card booking-card">
+        <div class="card-body p-4 p-lg-5">
+            <form method="post" id="appointment-form" novalidate>
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                {% endif %}
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="fw-bold mb-0">1. Select Doctor</h4>
+                    <span class="badge bg-primary">{{ doctors|length }} active doctor{{ doctors|length|pluralize }}</span>
+                </div>
+
+                {% if form.doctor.errors %}<div class="alert alert-danger">{{ form.doctor.errors }}</div>{% endif %}
+                <div class="row g-3 mb-4" id="doctor-list">
+                    {% for doctor in doctors %}
+                    <div class="col-md-6 col-xl-4">
+                        <label class="doctor-card d-block" data-doctor-card data-doctor-id="{{ doctor.id }}">
+                            <div class="d-flex align-items-center gap-3">
+                                {% if doctor.photo %}
+                                    <img src="{{ doctor.photo.url }}" class="doctor-photo" alt="Dr. {{ doctor.name }}">
+                                {% else %}
+                                    <div class="doctor-fallback"><i class="bi bi-person-badge"></i></div>
+                                {% endif %}
+                                <div class="flex-grow-1">
+                                    <div class="fw-bold">Dr. {{ doctor.name }}</div>
+                                    <div class="text-primary small">{{ doctor.specialization }}</div>
+                                    <div class="text-muted small">
+                                        {% if doctor.department %}{{ doctor.department.name }}{% else %}Department not assigned{% endif %}
+                                    </div>
+                                </div>
+                                <input type="radio" name="doctor" value="{{ doctor.id }}" class="doctor-radio" {% if form.doctor.value|stringformat:'s' == doctor.id|stringformat:'s' %}checked{% endif %}>
+                            </div>
+                            <div class="mt-3 small text-muted">
+                                {% if doctor.qualification %}<span class="me-3"><i class="bi bi-mortarboard me-1"></i>{{ doctor.qualification }}</span>{% endif %}
+                                <span class="me-3"><i class="bi bi-briefcase me-1"></i>{{ doctor.experience }} yrs</span>
+                                <span class="fw-semibold text-success">₹{{ doctor.fee }}</span>
+                            </div>
+                        </label>
+                    </div>
+                    {% empty %}
+                    <div class="col-12"><div class="alert alert-warning">No active doctors are available right now.</div></div>
+                    {% endfor %}
+                </div>
+
+                <div id="doctor-info" class="info-panel p-3 mb-4 d-none"></div>
+
+                <div class="row g-4">
+                    <div class="col-lg-5">
+                        <h4 class="fw-bold mb-3">2. Choose Date</h4>
+                        <label class="form-label fw-semibold">Appointment date</label>
+                        <input type="date" name="appointment_date" id="id_appointment_date" class="form-control form-control-lg" min="{{ today }}" value="{{ form.appointment_date.value|default:'' }}" required>
+                        {% if form.appointment_date.errors %}<div class="text-danger small mt-1">{{ form.appointment_date.errors|striptags }}</div>{% endif %}
+                    </div>
+
+                    <div class="col-lg-7">
+                        <h4 class="fw-bold mb-3">3. Available Time</h4>
+                        <div id="availability-message" class="text-muted small mb-2">Select a doctor and date to see available slots.</div>
+                        <div class="row row-cols-2 row-cols-md-4 g-2" id="time-slots"></div>
+                        <label for="id_appointment_time" class="form-label fw-semibold mt-3">Select appointment time</label>
+                        <input type="time" name="appointment_time" id="id_appointment_time" class="form-control" value="{{ form.appointment_time.value|default:'' }}" min="09:00" max="17:00" step="1800" required>
+                        <div class="form-text">Choose a 30-minute slot between 9:00 AM and 5:00 PM. This time field remains usable even if the slot buttons take a moment to load.</div>
+                        {% if form.appointment_time.errors %}<div class="text-danger small mt-2">{{ form.appointment_time.errors|striptags }}</div>{% endif %}
+                    </div>
+                </div>
+
+                <hr class="my-4">
+                <h4 class="fw-bold mb-3">4. Symptoms / Reason for Visit</h4>
+                <textarea name="symptoms" class="form-control" rows="4" maxlength="2000" placeholder="Describe your symptoms or reason for consultation...">{{ form.symptoms.value|default:'' }}</textarea>
+                {% if form.symptoms.errors %}<div class="text-danger small mt-1">{{ form.symptoms.errors|striptags }}</div>{% endif %}
+
+                <div class="alert alert-info mt-4 mb-4">
+                    <i class="bi bi-info-circle me-2"></i>
+                    Appointment requests are created with <strong>Pending</strong> status. Already-booked doctor/time slots cannot be selected.
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="{% url 'patient_appointments' %}" class="btn btn-outline-secondary px-4">Cancel</a>
+                    <button type="submit" class="btn btn-primary px-4" id="book-btn">
+                        <i class="bi bi-check-circle me-1"></i> Book Appointment
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+(function () {
+    const dateInput = document.getElementById('id_appointment_date');
+    const timeInput = document.getElementById('id_appointment_time');
+    const slots = document.getElementById('time-slots');
+    const msg = document.getElementById('availability-message');
+    const info = document.getElementById('doctor-info');
+    const endpoint = "{% url 'check_doctor_availability' %}";
+    const selectedTime = timeInput.value;
+
+    const doctorData = {
+        {% for doctor in doctors %}
+        "{{ doctor.id }}": {
+            name: "Dr. {{ doctor.name|escapejs }}",
+            specialization: "{{ doctor.specialization|escapejs }}",
+            department: "{% if doctor.department %}{{ doctor.department.name|escapejs }}{% else %}Department not assigned{% endif %}",
+            qualification: "{{ doctor.qualification|default:'Qualification not provided'|escapejs }}",
+            experience: "{{ doctor.experience }}",
+            fee: "₹{{ doctor.fee }}"
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    };
+
+    function selectedDoctor() {
+        const checked = document.querySelector('.doctor-radio:checked');
+        return checked ? checked.value : '';
+    }
+
+    function showDoctorInfo() {
+        const data = doctorData[selectedDoctor()];
+        if (!data) { info.classList.add('d-none'); return; }
+        info.classList.remove('d-none');
+        info.innerHTML = `<div class="fw-bold fs-5">${data.name}</div><div class="text-primary">${data.specialization}</div><div class="small text-muted">${data.department} · ${data.qualification} · ${data.experience} years experience</div><div class="fw-semibold text-success mt-1">Consultation fee: ${data.fee}</div>`;
+    }
+
+    function makeSlots(booked) {
+        slots.innerHTML = '';
+        const start = 9 * 60;
+        const end = 17 * 60;
+        for (let m = start; m <= end; m += 30) {
+            const hh = String(Math.floor(m / 60)).padStart(2, '0');
+            const mm = String(m % 60).padStart(2, '0');
+            const value = `${hh}:${mm}`;
+            const display = new Date(2000,0,1,Math.floor(m/60),m%60).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+            const isBooked = booked.includes(value);
+            const label = document.createElement('label');
+            label.className = 'slot' + (isBooked ? ' booked' : '');
+            label.innerHTML = `<input type="radio" name="slot_picker" value="${value}" ${isBooked ? 'disabled' : ''} ${value === selectedTime ? 'checked' : ''}>${display}`;
+            if (!isBooked) {
+                label.querySelector('input').addEventListener('change', function () { timeInput.value = this.value; });
+            }
+            slots.appendChild(label);
+        }
+        if (booked.length) msg.textContent = `${booked.length} booked slot(s) are unavailable. Choose any remaining slot.`;
+        else msg.textContent = 'All standard slots are currently available.';
+    }
+
+    async function loadAvailability() {
+        const doctor = selectedDoctor();
+        const date = dateInput.value;
+        timeInput.value = '';
+        slots.innerHTML = '';
+        if (!doctor) { msg.textContent = 'Select a doctor first, then choose a date to see available time slots.'; return; }
+        if (!date) { msg.textContent = 'Now choose an appointment date to see available time slots.'; return; }
+        msg.textContent = 'Checking availability...';
+        try {
+            const response = await fetch(`${endpoint}?doctor=${encodeURIComponent(doctor)}&date=${encodeURIComponent(date)}`, {headers: {'X-Requested-With':'XMLHttpRequest'}});
+            const data = await response.json();
+            if (!data.success) throw new Error(data.message || 'Unable to check availability');
+            makeSlots(data.booked_times || []);
+        } catch (error) {
+            msg.textContent = 'Could not load availability. Please try again.';
+        }
+    }
+
+    document.querySelectorAll('.doctor-radio').forEach(radio => radio.addEventListener('change', function () {
+        document.querySelectorAll('[data-doctor-card]').forEach(card => card.classList.remove('selected'));
+        this.closest('[data-doctor-card]').classList.add('selected');
+        showDoctorInfo();
+        loadAvailability();
+    }));
+    dateInput.addEventListener('change', loadAvailability);
+
+    let checked = document.querySelector('.doctor-radio:checked');
+    if (!checked) {
+        checked = document.querySelector('.doctor-radio');
+        if (checked) checked.checked = true;
+    }
+    if (checked) {
+        checked.closest('[data-doctor-card]').classList.add('selected');
+        showDoctorInfo();
+        if (dateInput.value) loadAvailability();
+    }
+
+    document.getElementById('appointment-form').addEventListener('submit', function (event) {
+        if (!selectedDoctor() || !dateInput.value || !timeInput.value) {
+            event.preventDefault();
+            alert('Please select a doctor, appointment date and available time slot.');
+        }
+    });
+})();
+</script>
+{% endblock %}

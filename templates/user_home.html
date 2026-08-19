@@ -1,0 +1,2841 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>City Care Hospital | Advanced Healthcare</title>
+    <meta
+        name="description"
+        content="City Care Hospital - Doctors, emergency care, laboratory, pharmacy, radiology and patient services."
+    >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/user_home.css' %}"
+    >
+</head>
+
+<body>
+
+<!-- =========================================
+     TOP INFO BAR
+========================================= -->
+
+<div class="top-info-bar">
+    <div class="container">
+        <div class="top-info-inner">
+
+            <div class="top-info-left">
+                <span>
+                    <i class="bi bi-geo-alt-fill"></i>
+                    City Care Hospital, Mirzapur, Uttar Pradesh, India
+                </span>
+
+                <span>
+                    <i class="bi bi-clock-fill"></i>
+                    Emergency: 24×7
+                </span>
+            </div>
+
+            <div class="top-info-right">
+                <a href="tel:+919336362701">
+                    <i class="bi bi-telephone-fill"></i>
+                    +91 9336362701
+                </a>
+
+                <a href="mailto:scitycarehospital9336@gmail.com">
+                    <i class="bi bi-envelope-fill"></i>
+                    citycarehospital9336@gmail.com
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
+<nav class="navbar navbar-expand-lg public-navbar">
+    <div class="container">
+
+        <a class="navbar-brand" href="{% url 'user_home' %}">
+            <div class="brand-box">
+
+                <img
+                    src="{% static 'images/hospital photo/logo.png' %}"
+                    alt="City Care Hospital Logo"
+                >
+
+                <div>
+                    <h5>City Care Hospital</h5>
+                    <small>Care • Compassion • Trust</small>
+                </div>
+
+            </div>
+        </a>
+
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#publicNavbar"
+            aria-controls="publicNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <div class="collapse navbar-collapse" id="publicNavbar">
+
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#home">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#services">Services</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#departments">Departments</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#doctors">Doctors</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#gallery">Gallery</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+
+                <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                    <a
+                        href="{% url 'login' %}"
+                        class="btn btn-outline-primary nav-btn"
+                    >
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        Login
+                    </a>
+                </li>
+
+                <li class="nav-item ms-lg-1 mt-2 mt-lg-0">
+                    <a
+                        href="{% url 'register' %}"
+                        class="btn btn-primary nav-btn"
+                    >
+                        <i class="bi bi-person-plus-fill"></i>
+                        Register
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+</nav>
+
+
+<!-- =========================================
+     HERO SLIDER
+========================================= -->
+
+<section id="home">
+
+    <div
+        id="heroCarousel"
+        class="carousel slide carousel-fade"
+        data-bs-ride="carousel"
+        data-bs-interval="4500"
+    >
+
+        <div class="carousel-indicators">
+
+            <button
+                type="button"
+                data-bs-target="#heroCarousel"
+                data-bs-slide-to="0"
+                class="active"
+                aria-current="true"
+                aria-label="Slide 1"
+            ></button>
+
+            <button
+                type="button"
+                data-bs-target="#heroCarousel"
+                data-bs-slide-to="1"
+                aria-label="Slide 2"
+            ></button>
+
+            <button
+                type="button"
+                data-bs-target="#heroCarousel"
+                data-bs-slide-to="2"
+                aria-label="Slide 3"
+            ></button>
+
+        </div>
+
+
+        <div class="carousel-inner">
+
+            <!-- Slide 1 -->
+
+            <div class="carousel-item active">
+
+                <div
+                    class="hero-slide"
+                    style="background-image:
+                    linear-gradient(
+                        100deg,
+                        rgba(3, 24, 62, .93),
+                        rgba(7, 70, 155, .78),
+                        rgba(13, 110, 253, .34)
+                    ),
+                    url(&quot;{% static 'images/hospital photo/building.png' %}&quot;);"
+                >
+
+                    <div class="container">
+
+                        <div class="hero-content">
+
+                            <span class="hero-badge">
+                                <i class="bi bi-heart-pulse-fill"></i>
+                                24×7 Advanced Healthcare
+                            </span>
+
+                            <h1>
+                                Better Care for a Healthier Tomorrow
+                            </h1>
+
+                            <p>
+                                Experienced doctors, modern diagnostics,
+                                pharmacy, emergency care and patient-focused
+                                treatment — all in one trusted hospital.
+                            </p>
+
+                            <div class="hero-buttons">
+
+                                <a
+                                    href="#appointment"
+                                    class="btn btn-light text-primary"
+                                >
+                                    <i class="bi bi-calendar-check-fill"></i>
+                                    Book Appointment
+                                </a>
+
+                                <a
+                                    href="#services"
+                                    class="btn btn-outline-light"
+                                >
+                                    Explore Services
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Slide 2 -->
+
+            <div class="carousel-item">
+
+                <div
+                    class="hero-slide"
+                    style="background-image:
+                    linear-gradient(
+                        100deg,
+                        rgba(3, 24, 62, .92),
+                        rgba(6, 92, 130, .77),
+                        rgba(14, 165, 233, .34)
+                    ),
+                    url(&quot;{% static 'images/hospital photo/BannerImg.png' %}&quot;);"
+                >
+
+                    <div class="container">
+
+                        <div class="hero-content">
+
+                            <span class="hero-badge">
+                                <i class="bi bi-person-badge-fill"></i>
+                                Specialist Medical Team
+                            </span>
+
+                            <h1>
+                                Expert Doctors. Personalized Treatment.
+                            </h1>
+
+                            <p>
+                                Meet our doctors across multiple specialties
+                                and access secure hospital services with
+                                role-based patient, doctor and staff portals.
+                            </p>
+
+                            <div class="hero-buttons">
+
+                                <a
+                                    href="#doctors"
+                                    class="btn btn-light text-primary"
+                                >
+                                    <i class="bi bi-person-lines-fill"></i>
+                                    Meet Doctors
+                                </a>
+
+                                <a
+                                    href="{% url 'register' %}"
+                                    class="btn btn-outline-light"
+                                >
+                                    Create Account
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Slide 3 -->
+
+            <div class="carousel-item">
+
+                <div
+                    class="hero-slide"
+                    style="background-image:
+                    linear-gradient(
+                        100deg,
+                        rgba(28, 15, 56, .92),
+                        rgba(49, 46, 129, .76),
+                        rgba(99, 102, 241, .30)
+                    ),
+                    url(&quot;{% static 'images/hospital photo/emergency.png' %}&quot;);"
+                >
+
+                    <div class="container">
+
+                        <div class="hero-content">
+
+                            <span class="hero-badge">
+                                <i class="bi bi-shield-check"></i>
+                                Emergency & Critical Care
+                            </span>
+
+                            <h1>
+                                Fast Response When Every Second Matters
+                            </h1>
+
+                            <p>
+                                Emergency support, ICU, ambulance and
+                                diagnostic services are available for
+                                urgent medical needs.
+                            </p>
+
+                            <div class="hero-buttons">
+
+                                <a
+                                    href="tel:+919336362701"
+                                    class="btn btn-danger"
+                                >
+                                    <i class="bi bi-telephone-outbound-fill"></i>
+                                    Emergency Call
+                                </a>
+
+                                <a
+                                    href="#gallery"
+                                    class="btn btn-outline-light"
+                                >
+                                    Hospital Gallery
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#heroCarousel"
+            data-bs-slide="prev"
+        >
+            <span class="carousel-control-prev-icon"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+
+        <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#heroCarousel"
+            data-bs-slide="next"
+        >
+            <span class="carousel-control-next-icon"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     QUICK INFO
+========================================= -->
+
+<section class="quick-info-section">
+
+    <div class="container">
+
+        <div class="row g-4">
+
+            <div class="col-lg-4">
+
+                <div class="quick-info-card emergency-card">
+
+                    <div class="quick-info-icon">
+                        <i class="bi bi-telephone-outbound-fill"></i>
+                    </div>
+
+                    <div>
+                        <h5>Emergency Helpline</h5>
+                        <p>24×7 urgent medical assistance</p>
+                        <strong>+91 9336362701</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-4">
+
+                <div class="quick-info-card appointment-card">
+
+                    <div class="quick-info-icon">
+                        <i class="bi bi-calendar2-check-fill"></i>
+                    </div>
+
+                    <div>
+                        <h5>Book Appointment</h5>
+                        <p>Register and schedule your consultation</p>
+
+                        <a href="{% url 'register' %}">
+                            Register Now
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-4">
+
+                <div class="quick-info-card hours-card">
+
+                    <div class="quick-info-icon">
+                        <i class="bi bi-clock-history"></i>
+                    </div>
+
+                    <div>
+                        <h5>OPD Working Hours</h5>
+                        <p>Monday – Saturday</p>
+                        <strong>09:00 AM – 07:00 PM</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     SERVICES
+========================================= -->
+
+<section id="services" class="section-padding">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>COMPLETE MEDICAL CARE</span>
+
+            <h2>
+                Comprehensive Healthcare Services
+            </h2>
+
+            <p>
+                Our medical services combine experienced professionals,
+                modern facilities and organized digital hospital support.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <div class="col-lg-3 col-md-6">
+
+                <article class="photo-service-card">
+
+                    <img
+                        src="{% static 'images/hospital photo/doctor.png' %}"
+                        alt="Expert Doctors"
+                    >
+
+                    <div class="photo-service-content">
+
+                        <span class="service-mini-icon">
+                            <i class="bi bi-person-badge-fill"></i>
+                        </span>
+
+                        <h4>Expert Doctors</h4>
+
+                        <p>
+                            Experienced specialists for diagnosis,
+                            consultation and treatment.
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <div class="col-lg-3 col-md-6">
+
+                <article class="photo-service-card">
+
+                    <img
+                        src="{% static 'images/hospital photo/emergency.png' %}"
+                        alt="Emergency Care"
+                    >
+
+                    <div class="photo-service-content">
+
+                        <span class="service-mini-icon">
+                            <i class="bi bi-heart-pulse-fill"></i>
+                        </span>
+
+                        <h4>Emergency Care</h4>
+
+                        <p>
+                            Rapid emergency support and critical care
+                            available throughout the day.
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <div class="col-lg-3 col-md-6">
+
+                <article class="photo-service-card">
+
+                    <img
+                        src="{% static 'images/hospital photo/laboratory.png' %}"
+                        alt="Laboratory"
+                    >
+
+                    <div class="photo-service-content">
+
+                        <span class="service-mini-icon">
+                            <i class="bi bi-clipboard2-pulse-fill"></i>
+                        </span>
+
+                        <h4>Laboratory</h4>
+
+                        <p>
+                            Diagnostic testing with organized reports
+                            and patient records.
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <div class="col-lg-3 col-md-6">
+
+                <article class="photo-service-card">
+
+                    <img
+                        src="{% static 'images/hospital photo/pharmecy.png' %}"
+                        alt="Hospital Pharmacy"
+                    >
+
+                    <div class="photo-service-content">
+
+                        <span class="service-mini-icon">
+                            <i class="bi bi-capsule-pill"></i>
+                        </span>
+
+                        <h4>Pharmacy</h4>
+
+                        <p>
+                            Hospital pharmacy with medicine availability
+                            and organized stock support.
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     ABOUT HOSPITAL
+========================================= -->
+
+<section id="about" class="section-padding section-white">
+
+    <div class="container">
+
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-6">
+
+                <div class="about-media">
+
+                    <img
+                        src="{% static 'images/hospital photo/reception.png' %}"
+                        alt="City Care Hospital Reception"
+                        class="about-main-image"
+                    >
+
+                    <div class="about-mini-image">
+
+                        <img
+                            src="{% static 'images/hospital photo/icu.png' %}"
+                            alt="Hospital ICU"
+                        >
+
+                    </div>
+
+
+                    <div class="about-experience-card">
+
+                        <strong>24×7</strong>
+
+                        <span>
+                            Emergency & Patient Support
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-6">
+
+                <span class="section-kicker">
+                    ABOUT CITY CARE HOSPITAL
+                </span>
+
+                <h2 class="about-title">
+                    Modern Treatment with Compassionate Care
+                </h2>
+
+                <p class="about-text">
+                    City Care Hospital combines medical expertise with
+                    digital hospital management to provide better coordination
+                    between doctors, staff and patients.
+                </p>
+
+                <p class="about-text">
+                    Our hospital includes emergency care, diagnostics,
+                    laboratory services, pharmacy support, radiology
+                    and organized patient records.
+                </p>
+
+
+                <div class="about-features">
+
+                    <div>
+                        <i class="bi bi-check-circle-fill"></i>
+                        Experienced Medical Team
+                    </div>
+
+                    <div>
+                        <i class="bi bi-check-circle-fill"></i>
+                        Advanced Diagnostics
+                    </div>
+
+                    <div>
+                        <i class="bi bi-check-circle-fill"></i>
+                        Digital Patient Records
+                    </div>
+
+                    <div>
+                        <i class="bi bi-check-circle-fill"></i>
+                        24×7 Emergency Support
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="#departments"
+                    class="btn btn-primary about-button"
+                >
+                    Explore Departments
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     STATS
+========================================= -->
+
+<section class="stats-section">
+
+    <div class="container">
+
+        <div class="row g-4">
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-box">
+
+                    <i class="bi bi-person-badge-fill"></i>
+
+                    <h2
+                        class="counter-number"
+                        data-counter="{{ doctor_count|default:'0' }}"
+                    >
+                        {{ doctor_count|default:"0" }}
+                    </h2>
+
+                    <p>Doctors</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-box">
+
+                    <i class="bi bi-people-fill"></i>
+
+                    <h2
+                        class="counter-number"
+                        data-counter="{{ patient_count|default:'0' }}"
+                    >
+                        {{ patient_count|default:"0" }}
+                    </h2>
+
+                    <p>Patients</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-box">
+
+                    <i class="bi bi-calendar-check-fill"></i>
+
+                    <h2
+                        class="counter-number"
+                        data-counter="{{ appointment_count|default:'0' }}"
+                    >
+                        {{ appointment_count|default:"0" }}
+                    </h2>
+
+                    <p>Appointments</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-box">
+
+                    <i class="bi bi-clock-fill"></i>
+
+                    <h2>24×7</h2>
+
+                    <p>Emergency Care</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     SPECIALIZED DEPARTMENTS
+========================================= -->
+
+
+<section id="departments" class="section-padding">
+    <div class="container">
+        <div class="section-heading">
+            <span>SPECIALIZED HOSPITAL DEPARTMENTS</span>
+            <h2>Specialized Medical Departments</h2>
+            <p>
+                Explore our major clinical departments and professional medical services.
+            </p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="department-pro-card">
+                    <div class="department-pro-image">
+                        <img src="{% static 'images/hospital photo/1_General_Medicine_HD.png' %}" alt="General Medicine">
+                    </div>
+                    <div class="department-pro-body">
+                        <div class="department-pro-top">
+                            <span class="department-pro-number">01</span>
+                            <span class="department-pro-icon">
+                                <i class="bi bi-stethoscope"></i>
+                            </span>
+                        </div>
+                        <h4>General Medicine</h4>
+                        <p>
+                            Comprehensive diagnosis, consultation and routine medical care for all ages.
+                        </p>
+                        <a href="#doctors" class="department-pro-link">
+                            <span>View Doctors</span>
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="department-pro-card">
+                    <div class="department-pro-image">
+                        <img src="{% static 'images/hospital photo/2_Cardiology_HD.png' %}" alt="Cardiology">
+                    </div>
+                    <div class="department-pro-body">
+                        <div class="department-pro-top">
+                            <span class="department-pro-number">02</span>
+                            <span class="department-pro-icon">
+                                <i class="bi bi-heart-pulse-fill"></i>
+                            </span>
+                        </div>
+                        <h4>Cardiology</h4>
+                        <p>
+                            Heart health consultation, ECG, ECHO and advanced cardiac care services.
+                        </p>
+                        <a href="#doctors" class="department-pro-link">
+                            <span>View Doctors</span>
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="department-pro-card">
+                    <div class="department-pro-image">
+                        <img src="{% static 'images/hospital photo/3_Neurology_HD.png' %}" alt="Neurology">
+                    </div>
+                    <div class="department-pro-body">
+                        <div class="department-pro-top">
+                            <span class="department-pro-number">03</span>
+                            <span class="department-pro-icon">
+                                <i class="bi bi-activity"></i>
+                            </span>
+                        </div>
+                        <h4>Neurology</h4>
+                        <p>
+                            Expert care for brain, spine, nerves and neurological disorders.
+                        </p>
+                        <a href="#doctors" class="department-pro-link">
+                            <span>View Doctors</span>
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="department-pro-card">
+                    <div class="department-pro-image">
+                        <img src="{% static 'images/hospital photo/4_Orthopedics_HD.png' %}" alt="Orthopedics">
+                    </div>
+                    <div class="department-pro-body">
+                        <div class="department-pro-top">
+                            <span class="department-pro-number">04</span>
+                            <span class="department-pro-icon">
+                                <i class="bi bi-universal-access"></i>
+                            </span>
+                        </div>
+                        <h4>Orthopedics</h4>
+                        <p>
+                            Bone, joint, muscle and spine care with modern treatment and surgery support.
+                        </p>
+                        <a href="#doctors" class="department-pro-link">
+                            <span>View Doctors</span>
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="department-pro-card">
+                    <div class="department-pro-image">
+                        <img src="{% static 'images/hospital photo/5_Radiology_HD.png' %}" alt="Radiology">
+                    </div>
+                    <div class="department-pro-body">
+                        <div class="department-pro-top">
+                            <span class="department-pro-number">05</span>
+                            <span class="department-pro-icon">
+                                <i class="bi bi-radioactive"></i>
+                            </span>
+                        </div>
+                        <h4>Radiology</h4>
+                        <p>
+                            Advanced imaging services including X-Ray, CT Scan, MRI and Ultrasound.
+                        </p>
+                        <a href="#gallery" class="department-pro-link">
+                            <span>View Facility</span>
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="department-pro-card">
+                    <div class="department-pro-image">
+                        <img src="{% static 'images/hospital photo/6_Pathology_HD.png' %}" alt="Pathology">
+                    </div>
+                    <div class="department-pro-body">
+                        <div class="department-pro-top">
+                            <span class="department-pro-number">06</span>
+                            <span class="department-pro-icon">
+                                <i class="bi bi-clipboard2-pulse-fill"></i>
+                            </span>
+                        </div>
+                        <h4>Pathology</h4>
+                        <p>
+                            Accurate laboratory testing and diagnostic reporting for better treatment.
+                        </p>
+                        <a href="#gallery" class="department-pro-link">
+                            <span>View Laboratory</span>
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="department-pro-card">
+                    <div class="department-pro-image">
+                        <img src="{% static 'images/hospital photo/7_Pharmacy_HD.png' %}" alt="Pharmacy">
+                    </div>
+                    <div class="department-pro-body">
+                        <div class="department-pro-top">
+                            <span class="department-pro-number">07</span>
+                            <span class="department-pro-icon">
+                                <i class="bi bi-capsule-pill"></i>
+                            </span>
+                        </div>
+                        <h4>Pharmacy</h4>
+                        <p>
+                            Complete hospital pharmacy support with medicine availability and stock management.
+                        </p>
+                        <a href="#services" class="department-pro-link">
+                            <span>View Service</span>
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="department-pro-card emergency-card">
+                    <div class="department-pro-image">
+                        <img src="{% static 'images/hospital photo/8_Emergency_HD.png' %}" alt="Emergency Department">
+                    </div>
+                    <div class="department-pro-body">
+                        <div class="department-pro-top">
+                            <span class="department-pro-number">08</span>
+                            <span class="department-pro-icon">
+                                <i class="bi bi-hospital-fill"></i>
+                            </span>
+                        </div>
+                        <h4>Emergency</h4>
+                        <p>
+                            24×7 emergency care, ambulance service and critical patient support.
+                        </p>
+                        <a href="tel:+919336362701" class="department-pro-link">
+                            <span>Emergency Call</span>
+                            <i class="bi bi-telephone-fill"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<!-- =========================================
+     FACILITIES
+========================================= -->
+
+<section class="section-padding facilities-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>HOSPITAL FACILITIES</span>
+
+            <h2>
+                Everything Patients Need in One Place
+            </h2>
+
+            <p>
+                Modern hospital facilities designed for safe,
+                comfortable and convenient patient care.
+            </p>
+
+        </div>
+
+
+        <div class="facilities-grid">
+
+            <article class="facility-card">
+
+                <img
+                    src="{% static 'images/hospital photo/icu.png' %}"
+                    alt="ICU"
+                >
+
+                <div>
+                    <h5>Advanced ICU</h5>
+                    <p>Critical care support</p>
+                </div>
+
+            </article>
+
+
+            <article class="facility-card">
+
+                <img
+                    src="{% static 'images/hospital photo/ambulance.png' %}"
+                    alt="Ambulance"
+                >
+
+                <div>
+                    <h5>Ambulance</h5>
+                    <p>Emergency transport</p>
+                </div>
+
+            </article>
+
+
+            <article class="facility-card">
+
+                <img
+                    src="{% static 'images/hospital photo/radiology.png' %}"
+                    alt="Radiology"
+                >
+
+                <div>
+                    <h5>Radiology</h5>
+                    <p>Diagnostic imaging</p>
+                </div>
+
+            </article>
+
+
+            <article class="facility-card">
+
+                <img
+                    src="{% static 'images/hospital photo/xray.png' %}"
+                    alt="X-Ray"
+                >
+
+                <div>
+                    <h5>X-Ray</h5>
+                    <p>Imaging services</p>
+                </div>
+
+            </article>
+
+
+            <article class="facility-card">
+
+                <img
+                    src="{% static 'images/hospital photo/garden.png' %}"
+                    alt="Garden"
+                >
+
+                <div>
+                    <h5>Green Garden</h5>
+                    <p>Relaxing environment</p>
+                </div>
+
+            </article>
+
+
+            <article class="facility-card">
+
+                <img
+                    src="{% static 'images/hospital photo/cafeteria.png' %}"
+                    alt="Cafeteria"
+                >
+
+                <div>
+                    <h5>Cafeteria</h5>
+                    <p>Food and refreshment</p>
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     OUR DOCTORS
+========================================= -->
+
+<section id="doctors" class="section-padding section-white">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>OUR DOCTORS</span>
+
+            <h2>
+                Meet Our Medical Specialists
+            </h2>
+
+            <p>
+                Experienced medical specialists providing
+                professional and compassionate healthcare.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4 justify-content-center">
+
+            {% for doctor in doctors %}
+
+                <div class="col-xl-3 col-lg-4 col-md-6">
+
+                    <article class="doctor-profile-card">
+
+                        <!-- DOCTOR PHOTO -->
+
+                        <div class="doctor-image-wrap">
+
+                            {% if doctor.photo %}
+
+                                <img
+                                    src="{{ doctor.photo.url }}"
+                                    alt="Dr. {{ doctor.name }}"
+                                >
+
+                            {% else %}
+
+                                {% if forloop.counter == 1 %}
+
+                                    <img
+                                        src="{% static 'images/hospital photo/D2.png' %}"
+                                        alt="Dr. {{ doctor.name }}"
+                                    >
+
+                                {% elif forloop.counter == 2 %}
+
+                                    <img
+                                        src="{% static 'images/hospital photo/D6.png' %}"
+                                        alt="Dr. {{ doctor.name }}"
+                                    >
+
+                                {% elif forloop.counter == 3 %}
+
+                                    <img
+                                        src="{% static 'images/hospital photo/D12.png' %}"
+                                        alt="Dr. {{ doctor.name }}"
+                                    >
+
+                                {% elif forloop.counter == 4 %}
+
+                                    <img
+                                        src="{% static 'images/hospital photo/D4.png' %}"
+                                        alt="Dr. {{ doctor.name }}"
+                                    >
+
+                                {% elif forloop.counter == 5 %}
+
+                                    <img
+                                        src="{% static 'images/hospital photo/D5.png' %}"
+                                        alt="Dr. {{ doctor.name }}"
+                                    >
+
+                                {% elif forloop.counter == 6 %}
+
+                                    <img
+                                        src="{% static 'images/hospital photo/D6.png' %}"
+                                        alt="Dr. {{ doctor.name }}"
+                                    >
+
+                                {% elif forloop.counter == 7 %}
+
+                                    <img
+                                        src="{% static 'images/hospital photo/D7.png' %}"
+                                        alt="Dr. {{ doctor.name }}"
+                                    >
+
+                                {% elif forloop.counter == 8 %}
+
+                                    <img
+                                        src="{% static 'images/hospital photo/D8.png' %}"
+                                        alt="Dr. {{ doctor.name }}"
+                                    >
+
+                                {% elif forloop.counter == 9 %}
+
+                                    <img
+                                        src="{% static 'images/hospital photo/D9.png' %}"
+                                        alt="Dr. {{ doctor.name }}"
+                                    >
+
+                                {% elif forloop.counter == 10 %}
+
+                                    <img
+                                        src="{% static 'images/hospital photo/D10.png' %}"
+                                        alt="Dr. {{ doctor.name }}"
+                                    >
+
+                                {% elif forloop.counter == 11 %}
+
+                                    <img
+                                        src="{% static 'images/hospital photo/D11.png' %}"
+                                        alt="Dr. {{ doctor.name }}"
+                                    >
+
+                                {% elif forloop.counter == 12 %}
+
+                                    <img
+                                        src="{% static 'images/hospital photo/D12.png' %}"
+                                        alt="Dr. {{ doctor.name }}"
+                                    >
+
+                                {% else %}
+
+                                    <img
+                                        src="{% static 'images/hospital photo/D1.png' %}"
+                                        alt="Dr. {{ doctor.name }}"
+                                    >
+
+                                {% endif %}
+
+                            {% endif %}
+
+
+                            <span class="doctor-status">
+
+                                <i class="bi bi-circle-fill"></i>
+
+                                Available
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- DOCTOR DETAILS -->
+
+                        <div class="doctor-profile-content">
+
+                            <h4>
+                                Dr. {{ doctor.name }}
+                            </h4>
+
+
+                            <span class="doctor-specialty">
+                                {{ doctor.specialization }}
+                            </span>
+
+
+                            {% if doctor.qualification %}
+
+                                <p>
+                                    <i class="bi bi-mortarboard-fill"></i>
+
+                                    {{ doctor.qualification }}
+                                </p>
+
+                            {% endif %}
+
+
+                            {% if doctor.experience %}
+
+                                <p>
+                                    <i class="bi bi-award-fill"></i>
+
+                                    {{ doctor.experience }}
+                                    Years Experience
+                                </p>
+
+                            {% endif %}
+
+
+                            {% if doctor.phone %}
+
+                                <p>
+                                    <i class="bi bi-telephone-fill"></i>
+
+                                    {{ doctor.phone }}
+                                </p>
+
+                            {% endif %}
+
+
+                            <p>
+
+                                <i class="bi bi-currency-rupee"></i>
+
+                                Consultation Fee:
+
+                                <strong>
+                                    ₹{{ doctor.fee }}
+                                </strong>
+
+                            </p>
+
+
+                            <a
+                                href="{% url 'register' %}"
+                                class="btn btn-primary w-100"
+                            >
+
+                                <i class="bi bi-calendar-plus-fill"></i>
+
+                                Book Appointment
+
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+            {% empty %}
+
+                <div class="col-12">
+
+                    <div class="empty-doctors">
+
+                        <i class="bi bi-person-plus-fill"></i>
+
+                        <h4>
+                            No Doctors Added Yet
+                        </h4>
+
+                        <p>
+                            Doctor records will appear here
+                            automatically after adding doctors.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     APPOINTMENT CTA
+========================================= -->
+
+<section
+    id="appointment"
+    class="section-padding appointment-section"
+>
+
+    <div class="container">
+
+        <div class="appointment-cta">
+
+            <div>
+
+                <span>
+                    NEED MEDICAL ASSISTANCE?
+                </span>
+
+                <h2>
+                    Book Your Consultation with City Care Hospital
+                </h2>
+
+                <p>
+                    Register as a patient and access appointments,
+                    bills, laboratory reports and secure hospital services.
+                </p>
+
+            </div>
+
+
+            <div class="appointment-cta-buttons">
+
+                <a
+                    href="{% url 'register' %}"
+                    class="btn btn-light text-primary"
+                >
+                    <i class="bi bi-person-plus-fill"></i>
+                    Register Patient
+                </a>
+
+                <a
+                    href="{% url 'login' %}"
+                    class="btn btn-outline-light"
+                >
+                    <i class="bi bi-shield-lock-fill"></i>
+                    Secure Login
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     GALLERY
+========================================= -->
+
+<section id="gallery" class="section-padding">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>HOSPITAL GALLERY</span>
+
+            <h2>
+                Explore City Care Hospital
+            </h2>
+
+            <p>
+                Click any photo to open it in full screen.
+                Browse all 15 photos with Previous and Next controls.
+            </p>
+
+        </div>
+
+
+        <div class="gallery-grid">
+
+            <button
+                type="button"
+                class="gallery-item"
+                data-gallery-index="0"
+            >
+                <img
+                    src="{% static 'images/hospital photo/building.png' %}"
+                    alt="Hospital Building"
+                >
+
+                <span class="gallery-overlay">
+                    <strong>Hospital Building</strong>
+                    <small>Main campus</small>
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-item"
+                data-gallery-index="1"
+            >
+                <img
+                    src="{% static 'images/hospital photo/reception.png' %}"
+                    alt="Reception"
+                >
+
+                <span class="gallery-overlay">
+                    <strong>Reception</strong>
+                    <small>Patient help desk</small>
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-item"
+                data-gallery-index="2"
+            >
+                <img
+                    src="{% static 'images/hospital photo/reception2.png' %}"
+                    alt="Reception Area"
+                >
+
+                <span class="gallery-overlay">
+                    <strong>Reception Area</strong>
+                    <small>Registration & waiting</small>
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-item"
+                data-gallery-index="3"
+            >
+                <img
+                    src="{% static 'images/hospital photo/icu.png' %}"
+                    alt="ICU"
+                >
+
+                <span class="gallery-overlay">
+                    <strong>ICU</strong>
+                    <small>Critical care facility</small>
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-item"
+                data-gallery-index="4"
+            >
+                <img
+                    src="{% static 'images/hospital photo/laboratory.png' %}"
+                    alt="Laboratory"
+                >
+
+                <span class="gallery-overlay">
+                    <strong>Laboratory</strong>
+                    <small>Diagnostic testing</small>
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-item"
+                data-gallery-index="5"
+            >
+                <img
+                    src="{% static 'images/hospital photo/radiology.png' %}"
+                    alt="Radiology"
+                >
+
+                <span class="gallery-overlay">
+                    <strong>Radiology</strong>
+                    <small>Modern imaging</small>
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-item"
+                data-gallery-index="6"
+            >
+                <img
+                    src="{% static 'images/hospital photo/emergency.png' %}"
+                    alt="Emergency"
+                >
+
+                <span class="gallery-overlay">
+                    <strong>Emergency</strong>
+                    <small>24×7 urgent care</small>
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-item"
+                data-gallery-index="7"
+            >
+                <img
+                    src="{% static 'images/hospital photo/ambulance.png' %}"
+                    alt="Ambulance"
+                >
+
+                <span class="gallery-overlay">
+                    <strong>Ambulance</strong>
+                    <small>Emergency transport</small>
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-item"
+                data-gallery-index="8"
+            >
+                <img
+                    src="{% static 'images/hospital photo/garden.png' %}"
+                    alt="Garden"
+                >
+
+                <span class="gallery-overlay">
+                    <strong>Hospital Garden</strong>
+                    <small>Green patient area</small>
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-item"
+                data-gallery-index="9"
+            >
+                <img
+                    src="{% static 'images/hospital photo/parking.png' %}"
+                    alt="Parking"
+                >
+
+                <span class="gallery-overlay">
+                    <strong>Parking</strong>
+                    <small>Visitor parking</small>
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-item"
+                data-gallery-index="10"
+            >
+                <img
+                    src="{% static 'images/hospital photo/cafeteria.png' %}"
+                    alt="Cafeteria"
+                >
+
+                <span class="gallery-overlay">
+                    <strong>Cafeteria</strong>
+                    <small>Food & refreshment</small>
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-item"
+                data-gallery-index="11"
+            >
+                <img
+                    src="{% static 'images/hospital photo/pharmecy.png' %}"
+                    alt="Pharmacy"
+                >
+
+                <span class="gallery-overlay">
+                    <strong>Pharmacy</strong>
+                    <small>Medicine counter</small>
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-item"
+                data-gallery-index="12"
+            >
+                <img
+                    src="{% static 'images/hospital photo/xray.png' %}"
+                    alt="X-Ray"
+                >
+
+                <span class="gallery-overlay">
+                    <strong>X-Ray</strong>
+                    <small>Diagnostic imaging</small>
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-item"
+                data-gallery-index="13"
+            >
+                <img
+                    src="{% static 'images/hospital photo/BannerImg.png' %}"
+                    alt="Hospital Facilities"
+                >
+
+                <span class="gallery-overlay">
+                    <strong>Hospital Facilities</strong>
+                    <small>Modern infrastructure</small>
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-item"
+                data-gallery-index="14"
+            >
+                <img
+                    src="{% static 'images/hospital photo/gallery1.jpg' %}"
+                    alt="City Care Hospital"
+                >
+
+                <span class="gallery-overlay">
+                    <strong>City Care Hospital</strong>
+                    <small>Healthcare environment</small>
+                </span>
+            </button>
+
+
+            <!-- Video -->
+
+            <button
+                type="button"
+                class="gallery-item gallery-video-card"
+                data-bs-toggle="modal"
+                data-bs-target="#hospitalVideoModal"
+            >
+
+                <div class="gallery-video-content">
+
+                    <span class="video-play-button">
+                        <i class="bi bi-play-fill"></i>
+                    </span>
+
+                    <strong>
+                        Hospital Video Tour
+                    </strong>
+
+                    <small>
+                        Click to Play Video
+                    </small>
+
+                </div>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     TESTIMONIALS
+========================================= -->
+
+<section class="section-padding reviews-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>PATIENT FEEDBACK</span>
+
+            <h2>
+                Trusted by Our Patients
+            </h2>
+
+            <p>
+                Sample patient feedback for the hospital website.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <div class="col-lg-4">
+
+                <article class="review-card">
+
+                    <div class="review-stars">
+                        ★★★★★
+                    </div>
+
+                    <p>
+                        “The hospital staff was helpful and the
+                        appointment process was organized and simple.”
+                    </p>
+
+                    <div class="review-user">
+
+                        <span>
+                            <i class="bi bi-person-fill"></i>
+                        </span>
+
+                        <div>
+                            <strong>Patient Review</strong>
+                            <small>General Medicine</small>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <div class="col-lg-4">
+
+                <article class="review-card">
+
+                    <div class="review-stars">
+                        ★★★★★
+                    </div>
+
+                    <p>
+                        “Laboratory and pharmacy services were
+                        easy to access and reports were clearly managed.”
+                    </p>
+
+                    <div class="review-user">
+
+                        <span>
+                            <i class="bi bi-person-fill"></i>
+                        </span>
+
+                        <div>
+                            <strong>Patient Review</strong>
+                            <small>Laboratory</small>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <div class="col-lg-4">
+
+                <article class="review-card">
+
+                    <div class="review-stars">
+                        ★★★★★
+                    </div>
+
+                    <p>
+                        “Doctors explained the treatment clearly and
+                        the overall hospital environment was comfortable.”
+                    </p>
+
+                    <div class="review-user">
+
+                        <span>
+                            <i class="bi bi-person-fill"></i>
+                        </span>
+
+                        <div>
+                            <strong>Patient Review</strong>
+                            <small>Consultation</small>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     CONTACT
+========================================= -->
+
+<section id="contact" class="section-padding section-white">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>CONTACT US</span>
+
+            <h2>
+                Get in Touch with City Care Hospital
+            </h2>
+
+            <p>
+                Contact our hospital for appointments,
+                emergency assistance and general information.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+
+                <div class="contact-info-card">
+
+                    <span>
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </span>
+
+                    <h5>Hospital Address</h5>
+
+                    <p>
+                        City Care Hospital<br>
+                       Mirzapur, Uttar Pradesh, India
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="contact-info-card">
+
+                    <span>
+                        <i class="bi bi-telephone-fill"></i>
+                    </span>
+
+                    <h5>Emergency & Contact</h5>
+
+                    <a href="tel:+919336362701">
+                        +91 9336362701
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="contact-info-card">
+
+                    <span>
+                        <i class="bi bi-envelope-fill"></i>
+                    </span>
+
+                    <h5>Email Address</h5>
+
+                    <a href=" citycarehospital9336@gmail.com">
+                        citycarehospital9336@gmail.com
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     PHOTO LIGHTBOX MODAL
+========================================= -->
+
+<div
+    class="modal fade gallery-modal"
+    id="galleryImageModal"
+    tabindex="-1"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5
+                    class="modal-title"
+                    id="galleryModalTitle"
+                >
+                    Hospital Gallery
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal"
+                ></button>
+
+            </div>
+
+
+            <div class="gallery-lightbox">
+
+                <img
+                    src=""
+                    id="galleryModalImage"
+                    alt="Hospital Gallery"
+                >
+
+
+                <button
+                    type="button"
+                    class="gallery-arrow gallery-arrow-left"
+                    id="galleryPrev"
+                >
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="gallery-arrow gallery-arrow-right"
+                    id="galleryNext"
+                >
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+
+
+                <span
+                    class="gallery-counter"
+                    id="galleryCounter"
+                >
+                    1 / 15
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     VIDEO MODAL
+========================================= -->
+
+<div
+    class="modal fade video-modal"
+    id="hospitalVideoModal"
+    tabindex="-1"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    <i class="bi bi-play-circle-fill"></i>
+                    City Care Hospital Video Tour
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal"
+                ></button>
+
+            </div>
+
+
+            <video
+                id="hospitalTourVideo"
+                controls
+                preload="metadata"
+                poster="{% static 'images/hospital photo/building.png' %}"
+            >
+
+                <source
+                    src="{% static 'images/hospital photo/hospital_gallery.mp4' %}"
+                    type="video/mp4"
+                >
+
+                Your browser does not support video.
+
+            </video>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer class="public-footer">
+
+    <div class="container">
+
+        <div class="row g-5">
+
+            <div class="col-lg-4">
+
+                <img
+                    src="{% static 'images/hospital photo/logo.png' %}"
+                    alt="City Care Hospital"
+                    class="footer-logo"
+                >
+
+                <h5>
+                    City Care Hospital
+                </h5>
+
+                <p>
+                    Compassionate healthcare supported by
+                    experienced professionals and organized
+                    digital hospital management.
+                </p>
+
+            </div>
+
+
+            <div class="col-lg-2 col-md-4">
+
+                <h5>
+                    Quick Links
+                </h5>
+
+                <div class="footer-links">
+
+                    <a href="#home">Home</a>
+
+                    <a href="#about">About</a>
+
+                    <a href="#services">Services</a>
+
+                    <a href="#doctors">Doctors</a>
+
+                    <a href="#gallery">Gallery</a>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-3 col-md-4">
+
+                <h5>
+                    Hospital Services
+                </h5>
+
+                <div class="footer-links">
+
+                    <a href="#services">Emergency Care</a>
+
+                    <a href="#services">Laboratory</a>
+
+                    <a href="#services">Pharmacy</a>
+
+                    <a href="#departments">Radiology</a>
+
+                    <a href="#appointment">Appointments</a>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-3 col-md-4">
+
+                <h5>
+                    Secure Portal
+                </h5>
+
+                <p>
+                    Doctor, Nurse, Staff and Patient access.
+                </p>
+
+                <a
+                    href="{% url 'login' %}"
+                    class="btn btn-outline-light me-2"
+                >
+                    Login
+                </a>
+
+                <a
+                    href="{% url 'register' %}"
+                    class="btn btn-light text-primary"
+                >
+                    Register
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <hr class="footer-divider">
+
+
+        <div class="footer-bottom">
+
+           <span>
+                © 2026 City Care Hospital. All rights reserved.
+            </span>
+             <span>
+               <p> Hospital Management System</p>
+            </span>
+
+            <span>
+              Designed and Developed by:Sushil maurya
+                <br>
+                <a href="https://possphere.com/"target="_blank"><b><u>Pos Sphere Pvt Ltd</u></b></a>
+
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- Back to top -->
+
+<button
+    type="button"
+    id="backToTop"
+    class="back-to-top"
+    aria-label="Back to top"
+>
+    <i class="bi bi-arrow-up"></i>
+</button>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+
+<script>
+// =========================================================
+// CITY CARE HOSPITAL - PUBLIC HOME PAGE
+// =========================================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    // -----------------------------------------------------
+    // Back to top
+    // -----------------------------------------------------
+
+    const backToTop =
+        document.getElementById("backToTop");
+
+    window.addEventListener("scroll", function () {
+
+        if (window.scrollY > 450) {
+            backToTop.style.display = "flex";
+        } else {
+            backToTop.style.display = "none";
+        }
+
+    });
+
+
+    backToTop.addEventListener(
+        "click",
+        function () {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+    );
+
+
+    // -----------------------------------------------------
+    // Gallery Data
+    // -----------------------------------------------------
+
+    const galleryPhotos = [
+
+        {
+            src:
+                "/static/images/hospital photo/building.png",
+            title:
+                "City Care Hospital Building"
+        },
+
+        {
+            src:
+                "/static/images/hospital photo/reception.png",
+            title:
+                "Hospital Reception"
+        },
+
+        {
+            src:
+                "/static/images/hospital photo/reception2.png",
+            title:
+                "Reception Area"
+        },
+
+        {
+            src:
+                "/static/images/hospital photo/icu.png",
+            title:
+                "Intensive Care Unit"
+        },
+
+        {
+            src:
+                "/static/images/hospital photo/laboratory.png",
+            title:
+                "Laboratory"
+        },
+
+        {
+            src:
+                "/static/images/hospital photo/radiology.png",
+            title:
+                "Radiology Department"
+        },
+
+        {
+            src:
+                "/static/images/hospital photo/emergency.png",
+            title:
+                "Emergency Department"
+        },
+
+        {
+            src:
+                "/static/images/hospital photo/ambulance.png",
+            title:
+                "Ambulance Service"
+        },
+
+        {
+            src:
+                "/static/images/hospital photo/garden.png",
+            title:
+                "Hospital Garden"
+        },
+
+        {
+            src:
+                "/static/images/hospital photo/parking.png",
+            title:
+                "Parking Area"
+        },
+
+        {
+            src:
+                "/static/images/hospital photo/cafeteria.png",
+            title:
+                "Hospital Cafeteria"
+        },
+
+        {
+            src:
+                "/static/images/hospital photo/pharmecy.png",
+            title:
+                "Hospital Pharmacy"
+        },
+
+        {
+            src:
+                "/static/images/hospital photo/xray.png",
+            title:
+                "X-Ray Department"
+        },
+
+        {
+            src:
+                "/static/images/hospital photo/BannerImg.png",
+            title:
+                "Hospital Facilities"
+        },
+
+        {
+            src:
+                "/static/images/hospital photo/gallery1.jpg",
+            title:
+                "City Care Hospital"
+        }
+
+    ];
+
+
+    let activeGalleryIndex = 0;
+
+
+    // -----------------------------------------------------
+    // Gallery Modal
+    // -----------------------------------------------------
+
+    const galleryModalElement =
+        document.getElementById(
+            "galleryImageModal"
+        );
+
+
+    const galleryModal =
+        new bootstrap.Modal(
+            galleryModalElement
+        );
+
+
+    const galleryModalImage =
+        document.getElementById(
+            "galleryModalImage"
+        );
+
+
+    const galleryModalTitle =
+        document.getElementById(
+            "galleryModalTitle"
+        );
+
+
+    const galleryCounter =
+        document.getElementById(
+            "galleryCounter"
+        );
+
+
+    function showGalleryPhoto(index) {
+
+        activeGalleryIndex =
+            (
+                index
+                +
+                galleryPhotos.length
+            )
+            %
+            galleryPhotos.length;
+
+
+        const photo =
+            galleryPhotos[
+                activeGalleryIndex
+            ];
+
+
+        galleryModalImage.src =
+            photo.src;
+
+
+        galleryModalImage.alt =
+            photo.title;
+
+
+        galleryModalTitle.textContent =
+            photo.title;
+
+
+        galleryCounter.textContent =
+            `${
+                activeGalleryIndex + 1
+            } / ${
+                galleryPhotos.length
+            }`;
+
+    }
+
+
+    document
+        .querySelectorAll(
+            "[data-gallery-index]"
+        )
+        .forEach(function (item) {
+
+            item.addEventListener(
+                "click",
+                function () {
+
+                    const index =
+                        Number(
+                            this.dataset
+                                .galleryIndex
+                        );
+
+
+                    showGalleryPhoto(index);
+
+
+                    galleryModal.show();
+
+                }
+            );
+
+        });
+
+
+    // -----------------------------------------------------
+    // Gallery Previous
+    // -----------------------------------------------------
+
+    document
+        .getElementById("galleryPrev")
+        .addEventListener(
+            "click",
+            function () {
+
+                showGalleryPhoto(
+                    activeGalleryIndex - 1
+                );
+
+            }
+        );
+
+
+    // -----------------------------------------------------
+    // Gallery Next
+    // -----------------------------------------------------
+
+    document
+        .getElementById("galleryNext")
+        .addEventListener(
+            "click",
+            function () {
+
+                showGalleryPhoto(
+                    activeGalleryIndex + 1
+                );
+
+            }
+        );
+
+
+    // -----------------------------------------------------
+    // Keyboard Controls
+    // -----------------------------------------------------
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                !galleryModalElement
+                    .classList
+                    .contains("show")
+            ) {
+                return;
+            }
+
+
+            if (event.key === "ArrowLeft") {
+
+                showGalleryPhoto(
+                    activeGalleryIndex - 1
+                );
+
+            }
+
+
+            if (event.key === "ArrowRight") {
+
+                showGalleryPhoto(
+                    activeGalleryIndex + 1
+                );
+
+            }
+
+        }
+    );
+
+
+    // -----------------------------------------------------
+    // Hospital Video
+    // -----------------------------------------------------
+
+    const hospitalVideoModal =
+        document.getElementById(
+            "hospitalVideoModal"
+        );
+
+
+    const hospitalTourVideo =
+        document.getElementById(
+            "hospitalTourVideo"
+        );
+
+
+    hospitalVideoModal.addEventListener(
+        "hidden.bs.modal",
+        function () {
+
+            hospitalTourVideo.pause();
+
+            hospitalTourVideo.currentTime = 0;
+
+        }
+    );
+
+
+    // -----------------------------------------------------
+    // Animated Counters
+    // -----------------------------------------------------
+
+    const counterElements =
+        document.querySelectorAll(
+            ".counter-number"
+        );
+
+
+    const counterObserver =
+        new IntersectionObserver(
+
+            function (entries, observer) {
+
+                entries.forEach(
+                    function (entry) {
+
+                        if (
+                            !entry.isIntersecting
+                        ) {
+                            return;
+                        }
+
+
+                        const element =
+                            entry.target;
+
+
+                        const target =
+                            Number(
+                                element.dataset
+                                    .counter
+                            );
+
+
+                        if (
+                            Number.isNaN(target)
+                        ) {
+                            return;
+                        }
+
+
+                        let current = 0;
+
+
+                        const duration = 1000;
+
+
+                        const steps = 35;
+
+
+                        const increment =
+                            Math.max(
+                                target / steps,
+                                1
+                            );
+
+
+                        const interval =
+                            setInterval(
+                                function () {
+
+                                    current +=
+                                        increment;
+
+
+                                    if (
+                                        current
+                                        >=
+                                        target
+                                    ) {
+
+                                        current =
+                                            target;
+
+                                        clearInterval(
+                                            interval
+                                        );
+
+                                    }
+
+
+                                    element.textContent =
+                                        Math.floor(
+                                            current
+                                        );
+
+                                },
+                                duration / steps
+                            );
+
+
+                        observer.unobserve(
+                            element
+                        );
+
+                    }
+                );
+
+            },
+
+            {
+                threshold: 0.45
+            }
+
+        );
+
+
+    counterElements.forEach(
+        function (counter) {
+
+            counterObserver.observe(
+                counter
+            );
+
+        }
+    );
+
+
+    // -----------------------------------------------------
+    // Close mobile navbar after clicking section link
+    // -----------------------------------------------------
+
+    const navbarCollapse =
+        document.getElementById(
+            "publicNavbar"
+        );
+
+
+    document
+        .querySelectorAll(
+            "#publicNavbar .nav-link"
+        )
+        .forEach(function (link) {
+
+            link.addEventListener(
+                "click",
+                function () {
+
+                    if (
+                        window.innerWidth
+                        <
+                        992
+                    ) {
+
+                        const instance =
+                            bootstrap
+                                .Collapse
+                                .getOrCreateInstance(
+                                    navbarCollapse
+                                );
+
+
+                        instance.hide();
+
+                    }
+
+                }
+            );
+
+        });
+
+});
+
+</script>
+
+</body>
+</html>

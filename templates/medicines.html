@@ -1,0 +1,429 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Pharmacy{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-flex justify-content-between align-items-center mb-4 no-print">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+                <i class="bi bi-capsule text-info"></i>
+                Pharmacy Management
+            </h2>
+            <a
+    href="{% url 'issue_medicine' %}"
+    class="btn btn-warning"
+>
+    <i class="bi bi-capsule-pill"></i>
+    Issue Medicine
+</a>
+
+<a
+    href="{% url 'medicine_issue_list' %}"
+    class="btn btn-dark"
+>
+    <i class="bi bi-clock-history"></i>
+    Issue History
+</a>
+
+            <p class="text-muted mb-0">
+                Manage medicines, stock and expiry dates
+            </p>
+        </div>
+
+        <div>
+            <a
+                href="{% url 'add_medicine' %}"
+                class="btn btn-success"
+            >
+                <i class="bi bi-plus-circle"></i>
+                Add Medicine
+            </a>
+
+            <button
+                type="button"
+                onclick="window.print()"
+                class="btn btn-primary"
+            >
+                <i class="bi bi-printer"></i>
+                Print List
+            </button>
+        </div>
+
+    </div>
+
+
+    <!-- Pharmacy Count Cards -->
+    <div class="row g-3 mb-4 no-print">
+
+        <!-- Total Medicines -->
+        <div class="col-xl-3 col-md-6">
+            <div class="pharmacy-stat-card pharmacy-total">
+
+                <div>
+                    <p>Total Medicines</p>
+                    <h3>{{ total_medicine }}</h3>
+                </div>
+
+                <div class="pharmacy-stat-icon">
+                    <i class="bi bi-capsule-pill"></i>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Available -->
+        <div class="col-xl-3 col-md-6">
+            <div class="pharmacy-stat-card pharmacy-available">
+
+                <div>
+                    <p>Available</p>
+                    <h3>{{ available_count }}</h3>
+                </div>
+
+                <div class="pharmacy-stat-icon">
+                    <i class="bi bi-check-circle"></i>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Low Stock -->
+        <div class="col-xl-3 col-md-6">
+            <div class="pharmacy-stat-card pharmacy-low">
+
+                <div>
+                    <p>Low Stock</p>
+                    <h3>{{ low_stock_count }}</h3>
+                </div>
+
+                <div class="pharmacy-stat-icon">
+                    <i class="bi bi-exclamation-triangle"></i>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Out of Stock -->
+        <div class="col-xl-3 col-md-6">
+            <div class="pharmacy-stat-card pharmacy-out">
+
+                <div>
+                    <p>Out of Stock</p>
+                    <h3>{{ out_stock_count }}</h3>
+                </div>
+
+                <div class="pharmacy-stat-icon">
+                    <i class="bi bi-x-circle"></i>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Expired Alert -->
+    {% if expired_count > 0 %}
+
+    <div class="alert alert-danger d-flex align-items-center no-print">
+
+        <i class="bi bi-exclamation-octagon-fill fs-4 me-3"></i>
+
+        <div>
+            <strong>Expired Medicine Alert!</strong>
+
+            {{ expired_count }} medicine(s) are marked as expired.
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- Search -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4 no-print">
+
+        <div class="card-body">
+
+            <form method="GET" class="row g-2">
+
+                <div class="col-md-8">
+
+                    <input
+                        type="text"
+                        name="search"
+                        class="form-control"
+                        placeholder="Search medicine or company name..."
+                        value="{{ search }}"
+                    >
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <button
+                        type="submit"
+                        class="btn btn-info w-100"
+                    >
+                        <i class="bi bi-search"></i>
+                        Search
+                    </button>
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <a
+                        href="{% url 'medicines' %}"
+                        class="btn btn-secondary w-100"
+                    >
+                        <i class="bi bi-arrow-clockwise"></i>
+                        Reset
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- Print Heading -->
+    <div class="print-heading">
+
+        <img
+            src="{% static 'images/hospital photo/logo.png' %}"
+            alt="City Care Hospital Logo"
+            class="print-logo"
+        >
+
+        <h2>City Care Hospital</h2>
+
+        <p>Pharmacy Medicine Stock Report</p>
+
+        <hr>
+
+    </div>
+
+
+    <!-- Medicine Table -->
+    <div class="card border-0 shadow-sm rounded-4">
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle pharmacy-table">
+
+                    <thead>
+                        <tr>
+                            <th>S.No.</th>
+                            <th>Medicine</th>
+                            <th>Company</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Expiry Date</th>
+                            <th>Status</th>
+                            <th>Alert</th>
+                            <th class="no-print">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for medicine in medicines %}
+
+                        <tr>
+
+                            <!-- Serial Number -->
+                            <td>
+                                {{ forloop.counter }}
+                            </td>
+
+
+                            <!-- Medicine -->
+                            <td class="fw-semibold text-primary">
+                                <i class="bi bi-capsule me-1"></i>
+                                {{ medicine.medicine_name }}
+                            </td>
+
+
+                            <!-- Company -->
+                            <td>
+                                {{ medicine.company_name }}
+                            </td>
+
+
+                            <!-- Price -->
+                            <td class="fw-semibold">
+                                ₹{{ medicine.price }}
+                            </td>
+
+
+                            <!-- Stock -->
+                            <td>
+
+                                {% if medicine.stock == 0 %}
+
+                                    <span class="stock-number stock-zero">
+                                        {{ medicine.stock }}
+                                    </span>
+
+                                {% elif medicine.stock <= 10 %}
+
+                                    <span class="stock-number stock-low">
+                                        {{ medicine.stock }}
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="stock-number stock-good">
+                                        {{ medicine.stock }}
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- Expiry Date -->
+                            <td>
+                                {{ medicine.expiry_date }}
+                            </td>
+
+
+                            <!-- User Selected Status -->
+                            <td>
+
+                                {% if medicine.status == "Available" %}
+
+                                    <span class="badge bg-success">
+                                        <i class="bi bi-check-circle"></i>
+                                        Available
+                                    </span>
+
+                                {% elif medicine.status == "Out of Stock" %}
+
+                                    <span class="badge bg-danger">
+                                        <i class="bi bi-x-circle"></i>
+                                        Out of Stock
+                                    </span>
+
+                                {% elif medicine.status == "Expired" %}
+
+                                    <span class="badge bg-dark">
+                                        <i class="bi bi-exclamation-circle"></i>
+                                        Expired
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-secondary">
+                                        {{ medicine.status }}
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- Automatic Alert -->
+                            <td>
+
+                                {% if medicine.expiry_date < today %}
+
+                                    <span class="badge bg-dark">
+                                        Expired Date
+                                    </span>
+
+                                {% elif medicine.expiry_date <= expiry_limit %}
+
+                                    <span class="badge bg-warning text-dark">
+                                        Expiring Soon
+                                    </span>
+
+                                {% elif medicine.stock == 0 %}
+
+                                    <span class="badge bg-danger">
+                                        No Stock
+                                    </span>
+
+                                {% elif medicine.stock <= 10 %}
+
+                                    <span class="badge bg-danger">
+                                        Low Stock
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-success-subtle text-success">
+                                        Normal
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- Actions -->
+                            <td class="no-print">
+
+                                <a
+                                    href="{% url 'edit_medicine' medicine.id %}"
+                                    class="btn btn-warning btn-sm"
+                                >
+                                    <i class="bi bi-pencil-square"></i>
+                                    Edit
+                                </a>
+
+                                <a
+                                    href="{% url 'delete_medicine' medicine.id %}"
+                                    class="btn btn-danger btn-sm"
+                                >
+                                    <i class="bi bi-trash"></i>
+                                    Delete
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+                            <td
+                                colspan="9"
+                                class="text-center text-muted py-5"
+                            >
+                                <i class="bi bi-capsule fs-1 d-block mb-2"></i>
+
+                                No medicines found.
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Bill{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+
+        <div class="card border-0 shadow-sm rounded-4">
+
+            <div class="card-header bg-warning text-dark py-3">
+                <h3 class="mb-0">
+                    <i class="bi bi-pencil-square"></i>
+                    Edit Bill
+                </h3>
+            </div>
+
+            <div class="card-body p-4">
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="bill-form">
+                        {{ form.as_p }}
+                    </div>
+
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-warning px-4">
+                            <i class="bi bi-check-circle"></i>
+                            Update Bill
+                        </button>
+
+                        <a
+                            href="{% url 'billing_list' %}"
+                            class="btn btn-secondary px-4"
+                        >
+                            <i class="bi bi-arrow-left"></i>
+                            Back
+                        </a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

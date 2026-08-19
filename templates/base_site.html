@@ -1,0 +1,25 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}
+City Care Hospital Admin
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/custom_admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+<div class="hospital-admin-brand">
+    <img
+        src="{% static 'images/hospital photo/logo.png' %}"
+        alt="Hospital Logo"
+    >
+
+    <div>
+        <h1>City Care Hospital</h1>
+        <p>Hospital Administration Panel</p>
+    </div>
+</div>
+{% endblock %}

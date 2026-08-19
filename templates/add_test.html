@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Add Laboratory Test{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8 col-md-10">
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+      <div class="card-header bg-info text-dark py-3"><h3 class="mb-0"><i class="bi bi-clipboard2-pulse"></i> Add Laboratory Test</h3></div>
+      <div class="card-body p-4">
+        <form method="post">{% csrf_token %}<div class="appointment-form">{{ form.as_p }}</div>
+          <div class="mt-4 d-flex gap-2"><button type="submit" class="btn btn-info px-4"><i class="bi bi-check-circle"></i> Save Test</button><a href="{% url 'laboratory' %}" class="btn btn-secondary px-4">Back</a></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

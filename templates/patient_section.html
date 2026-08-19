@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ section }} | City Care Hospital</title>
+<link rel="stylesheet" href="{% static 'css/patient_dashboard.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+.page-wrap{margin-left:280px;padding:35px;min-height:100vh;background:#f5f8fc}
+.section-box{background:#fff;border-radius:20px;padding:28px;box-shadow:0 10px 35px rgba(15,61,99,.08);max-width:1100px}
+.section-title{display:flex;align-items:center;gap:14px;margin-bottom:24px}.section-icon{width:52px;height:52px;border-radius:15px;background:#e8f3ff;color:#1677d2;display:grid;place-items:center;font-size:22px}
+.section-title h1{margin:0;font-size:28px;color:#17324d}.back{display:inline-flex;gap:8px;align-items:center;text-decoration:none;color:#1677d2;margin-bottom:20px;font-weight:600}
+.table-wrap{overflow:auto}.data-table{width:100%;border-collapse:collapse}.data-table th,.data-table td{padding:14px;border-bottom:1px solid #edf1f5;text-align:left}.data-table th{background:#f7faff;color:#52677d}.empty{padding:40px;text-align:center;color:#789}
+.profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.profile-item{padding:17px;background:#f7faff;border-radius:12px}.profile-item small{display:block;color:#789;margin-bottom:5px}.profile-item strong{color:#17324d}
+.action{display:inline-block;padding:11px 16px;border-radius:10px;background:#1677d2;color:#fff;text-decoration:none;margin-bottom:20px}
+@media(max-width:800px){.page-wrap{margin-left:0;padding:20px}.profile-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+<a class="back" href="{% url 'patient_dashboard' %}"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</a>
+<div class="section-box">
+<div class="section-title"><div class="section-icon"><i class="fa-solid {{ section_icon }}"></i></div><div><h1>{{ section }}</h1><span>City Care Hospital — Patient Portal</span></div></div>
+
+{% if section == "Appointments" %}
+<a class="action" href="{% url 'patient_book_appointment' %}"><i class="fa-solid fa-calendar-plus"></i> Book Appointment</a>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Doctor</th><th>Date</th><th>Time</th><th>Status</th><th>Symptoms</th></tr></thead><tbody>
+{% for item in appointments %}<tr><td>{{ item.doctor.name }}</td><td>{{ item.appointment_date|date:"d M Y" }}</td><td>{{ item.appointment_time|time:"h:i A" }}</td><td>{{ item.status }}</td><td>{{ item.symptoms|default:"—" }}</td></tr>{% empty %}<tr><td colspan="5" class="empty">No appointments found.</td></tr>{% endfor %}
+</tbody></table></div>
+
+{% elif section == "My Bills" %}
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Bill No.</th><th>Doctor</th><th>Date</th><th>Amount</th><th>Action</th></tr></thead><tbody>
+{% for item in bills %}<tr><td>{{ item.bill_number }}</td><td>{{ item.doctor.name }}</td><td>{{ item.bill_date|date:"d M Y" }}</td><td>₹{{ item.total_amount }}</td><td><a href="{% url 'print_bill' item.id %}" target="_blank">Print</a></td></tr>{% empty %}<tr><td colspan="5" class="empty">No bills found.</td></tr>{% endfor %}
+</tbody></table></div>
+
+{% elif section == "Laboratory Reports" %}
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Test</th><th>Date</th><th>Charge</th><th>Result</th><th>Report</th></tr></thead><tbody>
+{% for item in tests %}<tr><td>{{ item.test_name }}</td><td>{{ item.test_date|date:"d M Y" }}</td><td>₹{{ item.test_charge }}</td><td>{{ item.test_result|default:"Pending" }}</td><td><a href="{% url 'print_test_report' item.id %}" target="_blank">Print</a></td></tr>{% empty %}<tr><td colspan="5" class="empty">No laboratory reports found.</td></tr>{% endfor %}
+</tbody></table></div>
+
+{% elif section == "Pharmacy" %}
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Medicine</th><th>Quantity</th><th>Issue Date</th><th>Issued By</th></tr></thead><tbody>
+{% for item in issues %}<tr><td>{{ item.medicine.medicine_name }}</td><td>{{ item.quantity }}</td><td>{{ item.issue_date|date:"d M Y" }}</td><td>{{ item.issued_by|default:"Hospital Pharmacy" }}</td></tr>{% empty %}<tr><td colspan="4" class="empty">No medicine issue records found.</td></tr>{% endfor %}
+</tbody></table></div>
+
+{% elif section == "My Profile" %}
+{% if patient %}<div class="profile-grid">
+<div class="profile-item"><small>Name</small><strong>{{ patient.name }}</strong></div><div class="profile-item"><small>Email</small><strong>{{ patient.email|default:"Not provided" }}</strong></div>
+<div class="profile-item"><small>Phone</small><strong>{{ patient.phone }}</strong></div><div class="profile-item"><small>Gender</small><strong>{{ patient.gender|default:"Not provided" }}</strong></div>
+<div class="profile-item"><small>Age</small><strong>{{ patient.age|default:"Not provided" }}</strong></div><div class="profile-item"><small>Blood Group</small><strong>{{ patient.blood_group|default:"Not provided" }}</strong></div>
+<div class="profile-item"><small>Aadhaar</small><strong>{{ patient.aadhaar_number|default:"Not provided" }}</strong></div><div class="profile-item"><small>Address</small><strong>{{ patient.address|default:"Not provided" }}</strong></div>
+</div>{% else %}<div class="empty">Patient profile is not linked to this account.</div>{% endif %}
+{% endif %}
+</div></div>
+</body></html>

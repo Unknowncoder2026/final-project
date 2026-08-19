@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}My Appointments | City Care Hospital{% endblock %}
+{% block content %}
+<style>
+.appointment-header{background:linear-gradient(135deg,#0d6efd,#084298);color:#fff;border-radius:18px;padding:28px;margin-bottom:25px}.appointment-card{border:0;border-radius:16px;box-shadow:0 5px 20px rgba(0,0,0,.08);overflow:hidden}.appointment-table thead{background:#f5f7fb}.appointment-table th{font-size:14px;color:#555;font-weight:600;padding:16px;border:0}.appointment-table td{padding:16px;vertical-align:middle}.doctor-icon{width:48px;height:48px;border-radius:50%;background:#e8f1ff;color:#0d6efd;display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden}.status-badge{padding:7px 13px;border-radius:20px;font-size:12px;font-weight:600}.status-pending{background:#fff3cd;color:#856404}.status-completed{background:#d1e7dd;color:#0f5132}.status-cancelled{background:#f8d7da;color:#842029}.empty-box{text-align:center;padding:60px 20px}.empty-icon{width:80px;height:80px;border-radius:50%;background:#eef4ff;color:#0d6efd;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:35px}@media(max-width:768px){.appointment-header{padding:20px}.appointment-table{min-width:750px}}
+</style>
+<div class="container-fluid py-4">
+<div class="appointment-header"><div class="d-flex justify-content-between align-items-center flex-wrap gap-3"><div><h2 class="mb-2 fw-bold"><i class="bi bi-calendar-check me-2"></i>My Appointments</h2><p class="mb-0 opacity-75">View your upcoming and previous hospital appointments.</p></div><a href="{% url 'patient_new_appointment' %}" class="btn btn-light"><i class="bi bi-plus-circle me-1"></i> New Appointment</a></div></div>
+<div class="card appointment-card"><div class="card-body p-0"><div class="table-responsive"><table class="table appointment-table mb-0"><thead><tr><th>Doctor</th><th>Department</th><th>Date</th><th>Time</th><th>Status</th></tr></thead><tbody>
+{% for appointment in appointments %}
+<tr><td><div class="d-flex align-items-center">
+<div class="doctor-icon">{% if appointment.doctor.photo %}<img src="{{ appointment.doctor.photo.url }}" alt="Doctor" style="width:48px;height:48px;object-fit:cover">{% else %}<i class="bi bi-person-badge"></i>{% endif %}</div>
+<div class="ms-3"><div class="fw-bold">Dr. {{ appointment.doctor.name }}</div><small class="text-muted">{{ appointment.doctor.specialization }}</small></div></div></td>
+<td>{% if appointment.doctor.department %}{{ appointment.doctor.department.name }}{% else %}<span class="text-muted">Not Assigned</span>{% endif %}</td>
+<td class="fw-semibold">{{ appointment.appointment_date|date:"d M Y" }}</td>
+<td><i class="bi bi-clock me-1"></i>{{ appointment.appointment_time|time:"h:i A" }}</td>
+<td>{% if appointment.status == 'Pending' %}<span class="status-badge status-pending"><i class="bi bi-hourglass-split me-1"></i>Pending</span>{% elif appointment.status == 'Completed' %}<span class="status-badge status-completed"><i class="bi bi-check-circle me-1"></i>Completed</span>{% elif appointment.status == 'Cancelled' %}<span class="status-badge status-cancelled"><i class="bi bi-x-circle me-1"></i>Cancelled</span>{% else %}<span class="badge bg-secondary">{{ appointment.status }}</span>{% endif %}</td></tr>
+{% empty %}<tr><td colspan="5"><div class="empty-box"><div class="empty-icon"><i class="bi bi-calendar-x"></i></div><h4 class="fw-bold">No Appointments Yet</h4><p class="text-muted mb-4">You haven't booked any appointment yet.</p><a href="{% url 'patient_new_appointment' %}" class="btn btn-primary"><i class="bi bi-plus-circle me-1"></i>Book Your First Appointment</a></div></td></tr>{% endfor %}
+</tbody></table></div></div></div>
+</div>
+{% endblock %}

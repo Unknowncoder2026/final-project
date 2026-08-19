@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Bill{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+
+        <div class="card border-0 shadow rounded-4 overflow-hidden">
+
+            <div class="card-header bg-danger text-white text-center py-4">
+                <i class="bi bi-exclamation-triangle-fill fs-1"></i>
+
+                <h3 class="mt-2 mb-0">
+                    Delete Bill
+                </h3>
+            </div>
+
+            <div class="card-body p-4 text-center">
+
+                <h5 class="mb-3">
+                    क्या आप यह bill delete करना चाहते हैं?
+                </h5>
+
+                <div class="delete-info-box">
+
+                    <p>
+                        <span>Bill Number</span>
+                        <strong>{{ bill.bill_number }}</strong>
+                    </p>
+
+                    <p>
+                        <span>Patient</span>
+                        <strong>{{ bill.patient }}</strong>
+                    </p>
+
+                    <p>
+                        <span>Total Amount</span>
+                        <strong class="text-success">
+                            ₹{{ bill.total_amount }}
+                        </strong>
+                    </p>
+
+                </div>
+
+                <div class="alert alert-warning mt-4">
+                    Delete करने के बाद यह bill वापस नहीं आएगा।
+                </div>
+
+                <form method="POST" class="mt-4">
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="btn btn-danger px-4"
+                    >
+                        <i class="bi bi-trash-fill"></i>
+                        Yes, Delete
+                    </button>
+
+                    <a
+                        href="{% url 'billing_list' %}"
+                        class="btn btn-secondary px-4 ms-2"
+                    >
+                        <i class="bi bi-x-circle"></i>
+                        Cancel
+                    </a>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

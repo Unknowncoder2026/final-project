@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Medicine{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+
+        <div class="card border-0 shadow rounded-4">
+
+            <div class="card-header bg-danger text-white text-center py-4">
+                <i class="bi bi-exclamation-triangle-fill fs-1"></i>
+
+                <h3 class="mt-2 mb-0">
+                    Delete Medicine
+                </h3>
+            </div>
+
+            <div class="card-body p-4 text-center">
+
+                <h5>
+                    क्या आप यह medicine delete करना चाहते हैं?
+                </h5>
+
+                <div class="delete-info-box mt-4">
+
+                    <p>
+                        <span>Medicine</span>
+                        <strong>{{ medicine.medicine_name }}</strong>
+                    </p>
+
+                    <p>
+                        <span>Company</span>
+                        <strong>{{ medicine.company_name }}</strong>
+                    </p>
+
+                    <p>
+                        <span>Stock</span>
+                        <strong>{{ medicine.stock }}</strong>
+                    </p>
+
+                    <p>
+                        <span>Price</span>
+                        <strong>₹{{ medicine.price }}</strong>
+                    </p>
+
+                </div>
+
+                <form method="POST" class="mt-4">
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-danger px-4">
+                        Yes, Delete
+                    </button>
+
+                    <a
+                        href="{% url 'medicines' %}"
+                        class="btn btn-secondary px-4"
+                    >
+                        Cancel
+                    </a>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

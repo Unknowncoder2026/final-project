@@ -1,0 +1,201 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Laboratory Test Report</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 30px;
+            background: #eef4fb;
+            font-family: Arial, sans-serif;
+            color: #1e293b;
+        }
+
+        .report {
+            max-width: 800px;
+            margin: auto;
+            padding: 35px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .report-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #0dcaf0;
+        }
+
+        .report-header img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .report-header h1 {
+            margin: 0;
+            color: #0d47a1;
+        }
+
+        .report-header p {
+            margin: 5px 0 0;
+            color: #64748b;
+        }
+
+        .report-title {
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .details {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .details th,
+        .details td {
+            padding: 14px;
+            border: 1px solid #dbe3ec;
+            text-align: left;
+        }
+
+        .details th {
+            width: 35%;
+            color: #0d47a1;
+            background: #ecfeff;
+        }
+
+        .result-box {
+            min-height: 100px;
+            padding: 15px;
+            margin-top: 25px;
+            background: #f8fafc;
+            border: 1px solid #dbe3ec;
+            border-radius: 10px;
+        }
+
+        .signature {
+            margin-top: 55px;
+            text-align: right;
+        }
+
+        .print-button {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        button {
+            padding: 11px 24px;
+            color: white;
+            background: #0d6efd;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+                background: white;
+            }
+
+            .report {
+                max-width: 100%;
+                box-shadow: none;
+            }
+
+            .print-button {
+                display: none;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="report">
+
+    <div class="report-header">
+
+        <img
+            src="{% static 'images/hospital photo/logo.png' %}"
+            alt="Hospital Logo"
+        >
+
+        <div>
+            <h1>City Care Hospital</h1>
+            <p>Pathology and Laboratory Department</p>
+        </div>
+
+    </div>
+
+    <div class="report-title">
+
+        <h2>Laboratory Test Report</h2>
+
+        <p>Report No: LAB{{ test.id|stringformat:"04d" }}</p>
+
+    </div>
+
+    <table class="details">
+
+        <tr>
+            <th>Patient Name</th>
+            <td>{{ test.patient }}</td>
+        </tr>
+
+        <tr>
+            <th>Test Name</th>
+            <td>{{ test.test_name }}</td>
+        </tr>
+
+        <tr>
+            <th>Test Charge</th>
+            <td>₹{{ test.test_charge }}</td>
+        </tr>
+
+        <tr>
+            <th>Test Date</th>
+            <td>{{ test.test_date }}</td>
+        </tr>
+
+    </table>
+
+    <div class="result-box">
+
+        <h3>Test Result</h3>
+
+        <p>
+            {{ test.test_result|default:"Result Pending" }}
+        </p>
+
+    </div>
+
+    <div class="signature">
+        ___________________________<br>
+        Laboratory Technician
+    </div>
+
+    <div class="print-button">
+
+        <button onclick="window.print()">
+            Print / Save PDF
+        </button>
+
+    </div>
+
+</div>
+
+</body>
+</html>
